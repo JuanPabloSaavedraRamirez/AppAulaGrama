@@ -1,3 +1,4 @@
+import 'package:app_aulagramma/register.dart';
 import 'package:app_aulagramma/tienda.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -134,9 +135,31 @@ class _loginState extends State<login> {
                 Text("¿Perdiste tu contraseña?", style: TextStyle(
                   color: Colors.blue[50],
                 ),),
-                Text("¿No tienes cuenta? Registrate", style: TextStyle(
-                  color: Colors.blue[50],
-                ),),
+                Container(
+                  margin: EdgeInsets.all(10),
+                  child: ElevatedButton(
+                    onPressed: (){
+                      Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
+                        return register();
+                      }
+                      ));
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(" ¿No tienes cuenta? Registrate", style: TextStyle(
+                          color: Colors.blue[50],
+                        ),),
+                      ],
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(0)
+                      ),
+                    ),
+                  ),
+                ),
                 SizedBox(height: 30,)
               ],
             ),
