@@ -31,7 +31,6 @@ class _PerfilState extends State<Perfil> {
         children: [
           Column(
             children: [
-              // Muestra el nombre de usuario
               Container(
                 padding: EdgeInsets.all(10),
                 child: Row(
@@ -54,7 +53,6 @@ class _PerfilState extends State<Perfil> {
                   ],
                 ),
               ),
-              // Muestra el correo
               Container(
                 padding: EdgeInsets.all(10),
                 child: Row(
@@ -77,7 +75,6 @@ class _PerfilState extends State<Perfil> {
                   ],
                 ),
               ),
-              // Muestra la edad
               Container(
                 padding: EdgeInsets.all(10),
                 child: Row(
@@ -100,7 +97,6 @@ class _PerfilState extends State<Perfil> {
                   ],
                 ),
               ),
-              // Botones de cerrar sesión y modificar perfil
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -131,7 +127,7 @@ class _PerfilState extends State<Perfil> {
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
-                          return modificarPerfil();
+                          return ModificarPerfil(currentEmail: "", currentUsername: "", currentAge: "");
                         }));
                       },
                       child: Text(

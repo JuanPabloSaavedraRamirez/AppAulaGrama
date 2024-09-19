@@ -9,7 +9,6 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  // Controladores para los campos de texto
   final TextEditingController emailController = TextEditingController();
   final TextEditingController confirmEmailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -17,7 +16,6 @@ class _RegisterState extends State<Register> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
 
-  // Función para validar que los campos no estén vacíos
   bool _validateFields() {
     return emailController.text.isNotEmpty &&
         confirmEmailController.text.isNotEmpty &&
@@ -27,17 +25,14 @@ class _RegisterState extends State<Register> {
         ageController.text.isNotEmpty;
   }
 
-  // Función para validar que los correos coincidan
   bool _validateEmails() {
     return emailController.text == confirmEmailController.text;
   }
 
-  // Función para validar que las contraseñas coincidan
   bool _validatePasswords() {
     return passwordController.text == confirmPasswordController.text;
   }
 
-  // Mostrar un mensaje de error
   void _showError(String message) {
     showDialog(
       context: context,
@@ -58,7 +53,6 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  // Lógica cuando se presiona el botón "Completar"
   void _onComplete() {
     if (!_validateFields()) {
       _showError("Por favor, completa todos los campos.");
@@ -67,12 +61,11 @@ class _RegisterState extends State<Register> {
     } else if (!_validatePasswords()) {
       _showError("Las contraseñas no coinciden. Por favor, verifica tus datos.");
     } else {
-      // Navega a la pantalla de perfil pasando los datos automáticamente
       Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
         return Perfil(
-          username: usernameController.text,  // Pasa el nombre de usuario
-          email: emailController.text,        // Pasa el correo
-          age: ageController.text,            // Pasa la edad
+          username: usernameController.text,
+          email: emailController.text,
+          age: ageController.text,
         );
       }));
     }
@@ -173,7 +166,7 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                 ),
-                // Botón "Completar"
+                // Botón Completar
                 Container(
                   margin: EdgeInsets.all(10),
                   child: ElevatedButton(
