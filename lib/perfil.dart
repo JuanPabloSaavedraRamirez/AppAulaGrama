@@ -1,15 +1,24 @@
-import 'package:app_aulagramma/modificarPerfil.dart';
-import 'package:app_aulagramma/tienda.dart';
 import 'package:flutter/material.dart';
+import 'package:app_aulagramma/tienda.dart';
+import 'package:app_aulagramma/modificarPerfil.dart';
 
-class perfil extends StatefulWidget {
-  const perfil({super.key});
+class Perfil extends StatefulWidget {
+  final String username;
+  final String email;
+  final String age;
+
+  const Perfil({
+    super.key,
+    required this.username,
+    required this.email,
+    required this.age,
+  });
 
   @override
-  State<perfil> createState() => _perfilState();
+  State<Perfil> createState() => _PerfilState();
 }
 
-class _perfilState extends State<perfil> {
+class _PerfilState extends State<Perfil> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,6 +31,7 @@ class _perfilState extends State<perfil> {
         children: [
           Column(
             children: [
+              // Muestra el nombre de usuario
               Container(
                 padding: EdgeInsets.all(10),
                 child: Row(
@@ -29,18 +39,22 @@ class _perfilState extends State<perfil> {
                     Container(
                       padding: EdgeInsets.only(left: 10, right: 23, top: 10, bottom: 10),
                       color: Colors.blue,
-                      child: Text("User:", style: TextStyle(
-                        color: Colors.white,
-                      ),),
+                      child: Text(
+                        "User:",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                     Container(
                       color: Colors.grey,
                       padding: EdgeInsets.only(left: 20, right: 170, top: 10, bottom: 10),
-                      child: Text("data",),
+                      child: Text(widget.username),
                     ),
                   ],
                 ),
               ),
+              // Muestra el correo
               Container(
                 padding: EdgeInsets.all(10),
                 child: Row(
@@ -48,18 +62,22 @@ class _perfilState extends State<perfil> {
                     Container(
                       padding: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
                       color: Colors.blue,
-                      child: Text("Correo:", style: TextStyle(
-                        color: Colors.white,
-                      ),),
+                      child: Text(
+                        "Correo:",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                     Container(
                       color: Colors.grey,
                       padding: EdgeInsets.only(left: 20, right: 170, top: 10, bottom: 10),
-                      child: Text("data",),
+                      child: Text(widget.email),
                     ),
                   ],
                 ),
               ),
+              // Muestra la edad
               Container(
                 padding: EdgeInsets.all(10),
                 child: Row(
@@ -67,42 +85,43 @@ class _perfilState extends State<perfil> {
                     Container(
                       padding: EdgeInsets.only(left: 10, right: 23, top: 10, bottom: 10),
                       color: Colors.blue,
-                      child: Text("Edad:", style: TextStyle(
-                        color: Colors.white,
-                      ),),
+                      child: Text(
+                        "Edad:",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                     Container(
                       color: Colors.grey,
                       padding: EdgeInsets.only(left: 20, right: 170, top: 10, bottom: 10),
-                      child: Text("data",),
+                      child: Text(widget.age),
                     ),
                   ],
                 ),
               ),
+              // Botones de cerrar sesión y modificar perfil
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
                     margin: EdgeInsets.all(10),
                     child: ElevatedButton(
-                      onPressed: (){
-                        Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
                           return tienda();
-                        }
-                        ));
+                        }));
                       },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Cerrar", style: TextStyle(
-                            color: Colors.blue[50],
-                          ),),
-                        ],
+                      child: Text(
+                        "Cerrar",
+                        style: TextStyle(
+                          color: Colors.blue[50],
+                        ),
                       ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(0)
+                          borderRadius: BorderRadius.circular(0),
                         ),
                       ),
                     ),
@@ -110,24 +129,21 @@ class _perfilState extends State<perfil> {
                   Container(
                     margin: EdgeInsets.all(10),
                     child: ElevatedButton(
-                      onPressed: (){
-                        Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
                           return modificarPerfil();
-                        }
-                        ));
+                        }));
                       },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Modificar", style: TextStyle(
-                            color: Colors.blue[50],
-                          ),),
-                        ],
+                      child: Text(
+                        "Modificar",
+                        style: TextStyle(
+                          color: Colors.blue[50],
+                        ),
                       ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(0)
+                          borderRadius: BorderRadius.circular(0),
                         ),
                       ),
                     ),

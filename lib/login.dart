@@ -140,7 +140,7 @@ class _loginState extends State<login> {
                   child: ElevatedButton(
                     onPressed: (){
                       Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
-                        return register();
+                        return Register();
                       }
                       ));
                     },

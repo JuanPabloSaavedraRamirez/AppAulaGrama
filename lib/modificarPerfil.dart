@@ -92,7 +92,7 @@ class _modificarPerfilState extends State<modificarPerfil> {
                   child: ElevatedButton(
                     onPressed: (){
                       Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
-                        return perfil();
+                        return Perfil(username: "JP", email: "Saavedra", age: "20");();
                       }
                       ));
                     },
