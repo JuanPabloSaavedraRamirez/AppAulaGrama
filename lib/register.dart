@@ -67,12 +67,12 @@ class _RegisterState extends State<Register> {
     } else if (!_validatePasswords()) {
       _showError("Las contraseñas no coinciden. Por favor, verifica tus datos.");
     } else {
-      // Navega a la pantalla de perfil pasando los datos
+      // Navega a la pantalla de perfil pasando los datos automáticamente
       Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
         return Perfil(
-          username: usernameController.text,
-          email: emailController.text,
-          age: ageController.text,
+          username: usernameController.text,  // Pasa el nombre de usuario
+          email: emailController.text,        // Pasa el correo
+          age: ageController.text,            // Pasa la edad
         );
       }));
     }

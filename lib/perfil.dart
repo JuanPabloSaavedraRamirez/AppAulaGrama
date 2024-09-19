@@ -71,7 +71,7 @@ class _PerfilState extends State<Perfil> {
                     ),
                     Container(
                       color: Colors.grey,
-                      padding: EdgeInsets.only(left: 20, right: 170, top: 10, bottom: 10),
+                      padding: EdgeInsets.only(left: 20, right: 80, top: 10, bottom: 10),
                       child: Text(widget.email),
                     ),
                   ],

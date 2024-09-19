@@ -22,7 +22,7 @@ class menu extends StatelessWidget {
             child: ElevatedButton(
               onPressed: (){
                 Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
-                  return Perfil(username: "JP", email: "Saavedra", age: "20");
+                  return Perfil(username: "", email: "", age: "");
                 }
                 ));
               },
