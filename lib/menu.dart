@@ -1,3 +1,4 @@
+import 'package:app_aulagramma/perfil.dart';
 import 'package:flutter/material.dart';
 
 class menu extends StatelessWidget {
@@ -16,10 +17,30 @@ class menu extends StatelessWidget {
               color: Colors.blueAccent,
             ),
           ),
-          ListTile(
-            title: Text("Perfil"),
-            leading: Icon(Icons.person),
-            onTap: (){},
+          Container(
+            margin: EdgeInsets.all(10),
+            child: ElevatedButton(
+              onPressed: (){
+                Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
+                  return perfil();
+                }
+                ));
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(" Perfil", style: TextStyle(
+                    color: Colors.blue[50],
+                  ),),
+                ],
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(0)
+                ),
+              ),
+            ),
           ),
         ],
       ),
