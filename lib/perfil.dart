@@ -1,3 +1,4 @@
+import 'package:app_aulagramma/login.dart';
 import 'package:flutter/material.dart';
 import 'package:app_aulagramma/tienda.dart';
 import 'package:app_aulagramma/modificarPerfil.dart';
@@ -19,6 +20,27 @@ class Perfil extends StatefulWidget {
 }
 
 class _PerfilState extends State<Perfil> {
+  late String _username;
+  late String _email;
+  late String _age;
+
+  @override
+  void initState() {
+    super.initState();
+    // Inicializamos los valores con los datos recibidos del widget
+    _username = widget.username;
+    _email = widget.email;
+    _age = widget.age;
+  }
+
+  void _clearUserData() {
+    setState(() {
+      _username = ''; // Limpiamos el nombre de usuario
+      _email = '';    // Limpiamos el correo
+      _age = '';      // Limpiamos la edad
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,8 +69,8 @@ class _PerfilState extends State<Perfil> {
                     ),
                     Container(
                       color: Colors.grey,
-                      padding: EdgeInsets.only(left: 20, right: 170, top: 10, bottom: 10),
-                      child: Text(widget.username),
+                      padding: EdgeInsets.only(left: 20, right: 100, top: 10, bottom: 10),
+                      child: Text(_username.isEmpty ? 'Sin usuario' : _username),
                     ),
                   ],
                 ),
@@ -70,7 +92,7 @@ class _PerfilState extends State<Perfil> {
                     Container(
                       color: Colors.grey,
                       padding: EdgeInsets.only(left: 20, right: 80, top: 10, bottom: 10),
-                      child: Text(widget.email),
+                      child: Text(_email.isEmpty ? 'Sin correo' : _email),
                     ),
                   ],
                 ),
@@ -91,8 +113,8 @@ class _PerfilState extends State<Perfil> {
                     ),
                     Container(
                       color: Colors.grey,
-                      padding: EdgeInsets.only(left: 20, right: 170, top: 10, bottom: 10),
-                      child: Text(widget.age),
+                      padding: EdgeInsets.only(left: 20, right: 100, top: 10, bottom: 10),
+                      child: Text(_age.isEmpty ? 'Sin edad' : _age),
                     ),
                   ],
                 ),
@@ -109,7 +131,7 @@ class _PerfilState extends State<Perfil> {
                         }));
                       },
                       child: Text(
-                        "Cerrar",
+                        "Volver",
                         style: TextStyle(
                           color: Colors.blue[50],
                         ),
@@ -127,7 +149,7 @@ class _PerfilState extends State<Perfil> {
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
-                          return ModificarPerfil(currentEmail: "", currentUsername: "", currentAge: "");
+                          return ModificarPerfil(currentEmail: _email, currentUsername: _username, currentAge: _age);
                         }));
                       },
                       child: Text(
@@ -145,6 +167,31 @@ class _PerfilState extends State<Perfil> {
                     ),
                   ),
                 ],
+              ),
+              Container(
+                margin: EdgeInsets.all(10),
+                child: ElevatedButton(
+                  onPressed: () {
+                    _clearUserData(); // Limpiamos los datos
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => login(),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    "Cerrar sesion",
+                    style: TextStyle(
+                      color: Colors.blue[50],
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(0),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
