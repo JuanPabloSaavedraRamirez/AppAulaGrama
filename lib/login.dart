@@ -72,105 +72,118 @@ class _loginState extends State<login> {
         title: Text("",),
       ),
       backgroundColor: Colors.blue[800],
-      body: ListView(
-        children: [
-          Container(
-            margin: EdgeInsets.all(10),
-            color: Colors.blue,
-            child: Column(
-              children: [
-                Padding(padding: EdgeInsets.all(20)),
-                Text("Bienvenido", style: TextStyle(
-                    fontWeight: FontWeight.bold,
+      body: GestureDetector(
+        onTap: (){
+          final FocusScopeNode focus = FocusScope.of(context); //Hace que al dar click a la pantalla salga del teclado
+          if(!focus.hasPrimaryFocus && focus.hasFocus){
+            FocusManager.instance.primaryFocus?.unfocus(); //si es verdadero hace que se desefonque todo
+          }
+        },
+        child: ListView(
+          children: [
+            Container(
+              margin: EdgeInsets.all(10),
+              color: Colors.blue,
+              child: Column(
+                children: [
+                  Padding(padding: EdgeInsets.all(20)),
+                  Text("Bienvenido", style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue[50],
+                      fontSize: 30
+                  ),),
+                  Container(
+                    margin: EdgeInsets.all(10),
+                    color: Colors.white,
+                    child: TextField(
+                      controller: username,
+                      decoration: InputDecoration(
+                        hintText: " Usuario",
+                        hintStyle: TextStyle(color: Colors.grey),
+                        prefixIcon: Icon(Icons.person, size: 20,),
+                      ),),
+                  ),
+                  Container(
+                    margin: EdgeInsets.all(10),
+                    color: Colors.white,
+                    child: TextField(
+                      controller: password,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        hintText: " Contraseña",
+                        hintStyle: TextStyle(color: Colors.grey),
+                        prefixIcon: Icon(Icons.public, size: 20,),
+                      ),),
+                  ),
+                  Container(
+                    margin: EdgeInsets.all(10),
+                    child: ElevatedButton(
+                      onPressed: (){
+                        user = username.text;
+                        pw = password.text;
+                        validar();
+                        final FocusScopeNode focus = FocusScope.of(context); //Hace que al dar click a la pantalla salga del teclado
+                        if(!focus.hasPrimaryFocus && focus.hasFocus){
+                          FocusManager.instance.primaryFocus?.unfocus(); //si es verdadero hace que se desefonque todo
+                        }
+
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(" Login", style: TextStyle(
+                            color: Colors.black,
+                          ),),
+                        ],
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue[100],
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0)
+                        ),
+                      ),
+                    ),
+                  ),
+                  Text("¿Perdiste tu contraseña?", style: TextStyle(
                     color: Colors.blue[50],
-                    fontSize: 30
-                ),),
-                Container(
-                  margin: EdgeInsets.all(10),
-                  color: Colors.white,
-                  child: TextField(
-                    controller: username,
-                    decoration: InputDecoration(
-                      hintText: " Usuario",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      prefixIcon: Icon(Icons.person, size: 20,),
-                    ),),
-                ),
-                Container(
-                  margin: EdgeInsets.all(10),
-                  color: Colors.white,
-                  child: TextField(
-                    controller: password,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      hintText: " Contraseña",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      prefixIcon: Icon(Icons.public, size: 20,),
-                    ),),
-                ),
-                Container(
-                  margin: EdgeInsets.all(10),
-                  child: ElevatedButton(
-                    onPressed: (){
-                      user = username.text;
-                      pw = password.text;
-                      validar();
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(" Login", style: TextStyle(
-                          color: Colors.black,
-                        ),),
-                      ],
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue[100],
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(0)
+                  ),),
+                  Container(
+                    margin: EdgeInsets.all(10),
+                    child: ElevatedButton(
+                      onPressed: (){
+                        Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
+                          return Register();
+                        }
+                        ));
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(" ¿No tienes cuenta? Registrate", style: TextStyle(
+                            color: Colors.blue[50],
+                          ),),
+                        ],
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0)
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Text("¿Perdiste tu contraseña?", style: TextStyle(
-                  color: Colors.blue[50],
-                ),),
-                Container(
-                  margin: EdgeInsets.all(10),
-                  child: ElevatedButton(
-                    onPressed: (){
-                      Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
-                        return Register();
-                      }
-                      ));
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(" ¿No tienes cuenta? Registrate", style: TextStyle(
-                          color: Colors.blue[50],
-                        ),),
-                      ],
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(0)
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 30,)
-              ],
+                  SizedBox(height: 30,)
+                ],
+              ),
             ),
-          ),
-          Container(
-            alignment: Alignment.center,
-            child: Text("Volver", style: TextStyle(
-              color: Colors.blue[50],
-            ),),
-          ),
-        ],
+            Container(
+              alignment: Alignment.center,
+              child: Text("Volver", style: TextStyle(
+                color: Colors.blue[50],
+              ),),
+            ),
+          ],
+        ),
       ),
     );
   }
