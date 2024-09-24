@@ -1,3 +1,4 @@
+import 'package:app_aulagramma/camara.dart';
 import 'package:app_aulagramma/login.dart';
 import 'package:flutter/material.dart'; //Este es para android
 import 'tienda.dart';
@@ -18,7 +19,7 @@ class app extends StatelessWidget { //Esta es la clase dinamica
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true
       ),
-      home: login(),
+      home: camara(),
     );
   }
 }
