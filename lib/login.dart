@@ -1,3 +1,4 @@
+import 'package:app_aulagramma/perfil.dart';
 import 'package:app_aulagramma/register.dart';
 import 'package:app_aulagramma/tienda.dart';
 import 'package:flutter/material.dart';
@@ -24,10 +25,10 @@ class _loginState extends State<login> {
     }
     else if (user == 'JP' && pw == '123'){
       guardar_prefs();
-      Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
-        return tienda();
+      Navigator.of(context).pushAndRemoveUntil(new MaterialPageRoute(builder: (BuildContext context){
+        return Perfil(username: "", email: "", age: "");
       }
-      ));
+      ), (Route) => !Route.isActive);
     }
     else{
       print("usuario o contraseña incorrecta");
@@ -59,7 +60,6 @@ class _loginState extends State<login> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     tomar_datos();
   }

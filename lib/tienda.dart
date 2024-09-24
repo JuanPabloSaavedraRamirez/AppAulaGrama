@@ -15,6 +15,7 @@ class _tiendaState extends State<tienda> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text("Tienda"),
       ),
       endDrawer: menu(), //crear un drawer llamando al manu
