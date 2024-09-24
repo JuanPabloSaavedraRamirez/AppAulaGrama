@@ -27,7 +27,6 @@ class _PerfilState extends State<Perfil> {
   @override
   void initState() {
     super.initState();
-    // Inicializamos los valores con los datos recibidos del widget
     _username = widget.username;
     _email = widget.email;
     _age = widget.age;
@@ -35,9 +34,9 @@ class _PerfilState extends State<Perfil> {
 
   void _clearUserData() {
     setState(() {
-      _username = ''; // Limpiamos el nombre de usuario
-      _email = '';    // Limpiamos el correo
-      _age = '';      // Limpiamos la edad
+      _username = '';
+      _email = '';
+      _age = '';
     });
   }
 
@@ -172,7 +171,7 @@ class _PerfilState extends State<Perfil> {
                 margin: EdgeInsets.all(10),
                 child: ElevatedButton(
                   onPressed: () {
-                    _clearUserData(); // Limpiamos los datos
+                    _clearUserData();
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (BuildContext context) => login(),
