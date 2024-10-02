@@ -59,7 +59,6 @@ class _loginState extends State<login> {
   @override
   void initState() {
     super.initState();
-    tomar_datos();
   }
 
   @override
@@ -72,9 +71,9 @@ class _loginState extends State<login> {
       backgroundColor: Colors.blue[800],
       body: GestureDetector(
         onTap: (){
-          final FocusScopeNode focus = FocusScope.of(context); //Hace que al dar click a la pantalla salga del teclado
+          final FocusScopeNode focus = FocusScope.of(context);
           if(!focus.hasPrimaryFocus && focus.hasFocus){
-            FocusManager.instance.primaryFocus?.unfocus(); //si es verdadero hace que se desefonque todo
+            FocusManager.instance.primaryFocus?.unfocus();
           }
         },
         child: ListView(
@@ -120,9 +119,9 @@ class _loginState extends State<login> {
                         user = username.text;
                         pw = password.text;
                         validar();
-                        final FocusScopeNode focus = FocusScope.of(context); //Hace que al dar click a la pantalla salga del teclado
+                        final FocusScopeNode focus = FocusScope.of(context);
                         if(!focus.hasPrimaryFocus && focus.hasFocus){
-                          FocusManager.instance.primaryFocus?.unfocus(); //si es verdadero hace que se desefonque todo
+                          FocusManager.instance.primaryFocus?.unfocus();
                         }
 
                       },
