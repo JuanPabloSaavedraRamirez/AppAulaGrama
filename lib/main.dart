@@ -2,7 +2,6 @@ import 'package:app_aulagramma/camara.dart';
 import 'package:app_aulagramma/login.dart';
 import 'package:flutter/material.dart'; //Este es para android
 import 'tienda.dart';
-import 'Home.dart'; //Siempre debemos importar los archivos que estaremos usando
 
 void main(){ //Se crea la funcion main y dentro se llama al "runApp()"
   runApp(app());
