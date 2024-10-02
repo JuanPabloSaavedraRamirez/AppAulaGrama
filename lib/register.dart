@@ -1,5 +1,7 @@
+import 'package:app_aulagramma/login.dart';
 import 'package:flutter/material.dart';
 import 'package:app_aulagramma/perfil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -15,6 +17,34 @@ class _RegisterState extends State<Register> {
   final TextEditingController confirmPasswordController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _checkLoggedIn();
+  }
+
+  // Verifica si hay datos guardados y redirige al perfil
+  void _checkLoggedIn() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? email = prefs.getString('email');
+    String? username = prefs.getString('username');
+    String? age = prefs.getString('age');
+
+    if (email != null && username != null && age != null) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (BuildContext context) {
+            return Perfil(
+              username: username,
+              email: email,
+              age: age,
+            );
+          },
+        ),
+      );
+    }
+  }
 
   bool _validateFields() {
     return emailController.text.isNotEmpty &&
@@ -34,26 +64,24 @@ class _RegisterState extends State<Register> {
   }
 
   void _showError(String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Error"),
-          content: Text(message),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text("Aceptar"),
-            ),
-          ],
-        );
-      },
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.red,
+        behavior: SnackBarBehavior.floating,
+      ),
     );
   }
 
-  void _onComplete() {
+  // Guarda los datos en SharedPreferences
+  Future<void> _saveData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('email', emailController.text);
+    await prefs.setString('username', usernameController.text);
+    await prefs.setString('age', ageController.text);
+  }
+
+  void _onComplete() async {
     if (!_validateFields()) {
       _showError("Por favor, completa todos los campos.");
     } else if (!_validateEmails()) {
@@ -61,7 +89,8 @@ class _RegisterState extends State<Register> {
     } else if (!_validatePasswords()) {
       _showError("Las contraseñas no coinciden. Por favor, verifica tus datos.");
     } else {
-      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+      await _saveData(); // Guarda los datos cuando todo es válido
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
         return Perfil(
           username: usernameController.text,
           email: emailController.text,
@@ -195,7 +224,9 @@ class _RegisterState extends State<Register> {
                   margin: EdgeInsets.all(10),
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                        return login();
+                      }));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
