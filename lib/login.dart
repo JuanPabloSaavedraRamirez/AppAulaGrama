@@ -42,21 +42,19 @@ class _loginState extends State<login> {
     prefs.setString("usuario", "JP");
   }
 
-  Future <void> tomar_datos() async{
+  Future<void> tomar_datos() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    user = prefs.getString("usuario")!;
+    user = prefs.getString("usuario") ?? '';
 
-    //prefs.clear();
-
-    if (user != null){
-      if (user != ''){
-        Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
+    if (user.isNotEmpty) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (BuildContext context) {
           return tienda();
-        }
-        ));
-      }
+        }),
+      );
     }
   }
+
 
   @override
   void initState() {
