@@ -24,7 +24,6 @@ class _RegisterState extends State<Register> {
     _checkLoggedIn();
   }
 
-  // Verifica si hay datos guardados y redirige al perfil
   void _checkLoggedIn() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? email = prefs.getString('email');
@@ -73,7 +72,6 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  // Guarda los datos en SharedPreferences
   Future<void> _saveData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('email', emailController.text);
@@ -114,7 +112,6 @@ class _RegisterState extends State<Register> {
             margin: EdgeInsets.all(10),
             child: Column(
               children: [
-                // Campo de texto para correo
                 Container(
                   margin: EdgeInsets.all(10),
                   color: Colors.white,
@@ -127,7 +124,6 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                 ),
-                // Campo de texto para confirmar correo
                 Container(
                   margin: EdgeInsets.all(10),
                   color: Colors.white,
@@ -140,7 +136,6 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                 ),
-                // Campo de texto para contraseña
                 Container(
                   margin: EdgeInsets.all(10),
                   color: Colors.white,
@@ -154,7 +149,6 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                 ),
-                // Campo de texto para confirmar contraseña
                 Container(
                   margin: EdgeInsets.all(10),
                   color: Colors.white,
@@ -168,7 +162,6 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                 ),
-                // Campo de texto para nombre de usuario
                 Container(
                   margin: EdgeInsets.all(10),
                   color: Colors.white,
@@ -181,7 +174,6 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                 ),
-                // Campo de texto para la edad
                 Container(
                   margin: EdgeInsets.all(10),
                   color: Colors.white,
@@ -195,7 +187,6 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                 ),
-                // Botón Completar
                 Container(
                   margin: EdgeInsets.all(10),
                   child: ElevatedButton(
@@ -219,7 +210,6 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                 ),
-                // Botón para iniciar sesión si ya tiene cuenta
                 Container(
                   margin: EdgeInsets.all(10),
                   child: ElevatedButton(
