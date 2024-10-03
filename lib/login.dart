@@ -18,28 +18,40 @@ class _loginState extends State<login> {
 
   String user = "";
   String pw = "";
+  String cor = "saavedra75@live.com";
+  String edad = "20";
 
-  validar(){
-    if (user == '' || pw == ''){
-      print("Debes de llenar todos los datos");
-    }
-    else if (user == 'JP' && pw == '123'){
-      guardar_prefs();
-      Navigator.of(context).pushAndRemoveUntil(new MaterialPageRoute(builder: (BuildContext context){
-        return Perfil(username: "", email: "", age: "");
-      }
-      ), (Route) => !Route.isActive);
-    }
-    else{
-      print("usuario o contraseña incorrecta");
+  validar() {
+    if (user.isEmpty || pw.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Debes llenar todos los campos"))
+      );
+    } else if (user == 'JP' && pw == '123') {
+      guardar_prefs(); // Guardar el usuario en SharedPreferences
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (BuildContext context) {
+            return Perfil(
+              username: user,
+              email: cor,
+              age: edad,
+            );
+          },
+        ),
+            (Route<dynamic> route) => false,
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Usuario o contraseña incorrectos"))
+      );
       username.text = '';
       password.text = '';
     }
   }
 
-  Future <void> guardar_prefs() async{
+  Future<void> guardar_prefs() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("usuario", "JP");
+    prefs.setString("usuario", user); // Guarda solo el usuario
   }
 
   Future<void> tomar_datos() async {
@@ -55,7 +67,6 @@ class _loginState extends State<login> {
     }
   }
 
-
   @override
   void initState() {
     super.initState();
@@ -66,13 +77,13 @@ class _loginState extends State<login> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue[800],
-        title: Text("",),
+        title: Text(""),
       ),
       backgroundColor: Colors.blue[800],
       body: GestureDetector(
-        onTap: (){
+        onTap: () {
           final FocusScopeNode focus = FocusScope.of(context);
-          if(!focus.hasPrimaryFocus && focus.hasFocus){
+          if (!focus.hasPrimaryFocus && focus.hasFocus) {
             FocusManager.instance.primaryFocus?.unfocus();
           }
         },
@@ -84,11 +95,15 @@ class _loginState extends State<login> {
               child: Column(
                 children: [
                   Padding(padding: EdgeInsets.all(20)),
-                  Text("Bienvenido", style: TextStyle(
+                  Text(
+                    "Bienvenido",
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.blue[50],
-                      fontSize: 30
-                  ),),
+                      fontSize: 30,
+                    ),
+                  ),
+                  // Campo para el usuario
                   Container(
                     margin: EdgeInsets.all(10),
                     color: Colors.white,
@@ -97,9 +112,11 @@ class _loginState extends State<login> {
                       decoration: InputDecoration(
                         hintText: " Usuario",
                         hintStyle: TextStyle(color: Colors.grey),
-                        prefixIcon: Icon(Icons.person, size: 20,),
-                      ),),
+                        prefixIcon: Icon(Icons.person, size: 20),
+                      ),
+                    ),
                   ),
+                  // Campo para la contraseña
                   Container(
                     margin: EdgeInsets.all(10),
                     color: Colors.white,
@@ -109,75 +126,98 @@ class _loginState extends State<login> {
                       decoration: InputDecoration(
                         hintText: " Contraseña",
                         hintStyle: TextStyle(color: Colors.grey),
-                        prefixIcon: Icon(Icons.public, size: 20,),
-                      ),),
+                        prefixIcon: Icon(Icons.lock, size: 20),
+                      ),
+                    ),
                   ),
+                  // Botón de inicio de sesión
                   Container(
                     margin: EdgeInsets.all(10),
                     child: ElevatedButton(
-                      onPressed: (){
-                        user = username.text;
-                        pw = password.text;
-                        validar();
-                        final FocusScopeNode focus = FocusScope.of(context);
-                        if(!focus.hasPrimaryFocus && focus.hasFocus){
-                          FocusManager.instance.primaryFocus?.unfocus();
+                      onPressed: () {
+                        user = username.text.trim();
+                        pw = password.text.trim();
+
+                        // Verifica si los campos obligatorios están vacíos
+                        if (user.isNotEmpty && pw.isNotEmpty) {
+                          validar();
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("Debes llenar los campos obligatorios"))
+                          );
                         }
 
+                        final FocusScopeNode focus = FocusScope.of(context);
+                        if (!focus.hasPrimaryFocus && focus.hasFocus) {
+                          FocusManager.instance.primaryFocus?.unfocus();
+                        }
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(" Login", style: TextStyle(
-                            color: Colors.black,
-                          ),),
+                          Text(
+                            " Login",
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
                         ],
                       ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue[100],
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(0)
+                          borderRadius: BorderRadius.circular(0),
                         ),
                       ),
                     ),
                   ),
-                  Text("¿Perdiste tu contraseña?", style: TextStyle(
-                    color: Colors.blue[50],
-                  ),),
+                  Text(
+                    "¿Perdiste tu contraseña?",
+                    style: TextStyle(
+                      color: Colors.blue[50],
+                    ),
+                  ),
                   Container(
                     margin: EdgeInsets.all(10),
                     child: ElevatedButton(
-                      onPressed: (){
-                        Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context){
-                          return Register();
-                        }
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (BuildContext context) {
+                            return Register();
+                          },
                         ));
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(" ¿No tienes cuenta? Registrate", style: TextStyle(
-                            color: Colors.blue[50],
-                          ),),
+                          Text(
+                            " ¿No tienes cuenta? Regístrate",
+                            style: TextStyle(
+                              color: Colors.blue[50],
+                            ),
+                          ),
                         ],
                       ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(0)
+                          borderRadius: BorderRadius.circular(0),
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(height: 30,)
+                  SizedBox(height: 30),
                 ],
               ),
             ),
             Container(
               alignment: Alignment.center,
-              child: Text("Volver", style: TextStyle(
-                color: Colors.blue[50],
-              ),),
+              child: Text(
+                "Volver",
+                style: TextStyle(
+                  color: Colors.blue[50],
+                ),
+              ),
             ),
           ],
         ),
