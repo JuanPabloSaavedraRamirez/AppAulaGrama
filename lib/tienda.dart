@@ -18,7 +18,7 @@ class _tiendaState extends State<tienda> {
         automaticallyImplyLeading: false,
         title: Text("Tienda"),
       ),
-      endDrawer: menu(), //crear un drawer llamando al manu
+      endDrawer: Menu(), //crear un drawer llamando al manu
       body:
       Column(
         children: [
