@@ -5,12 +5,14 @@ class ModificarPerfil extends StatefulWidget {
   final String currentEmail;
   final String currentUsername;
   final String currentAge;
+  final String currentNumber;
 
   const ModificarPerfil({
     Key? key,
     required this.currentEmail,
     required this.currentUsername,
     required this.currentAge,
+    required this.currentNumber,
   }) : super(key: key);
 
   @override
@@ -24,6 +26,7 @@ class _ModificarPerfilState extends State<ModificarPerfil> {
   final TextEditingController confirmPasswordController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
+  final TextEditingController numberController = TextEditingController();
 
   @override
   void initState() {
@@ -31,6 +34,7 @@ class _ModificarPerfilState extends State<ModificarPerfil> {
     emailController.text = widget.currentEmail;
     usernameController.text = widget.currentUsername;
     ageController.text = widget.currentAge;
+    numberController.text = widget.currentNumber;
   }
 
   bool _validateEmails() {
@@ -151,6 +155,18 @@ class _ModificarPerfilState extends State<ModificarPerfil> {
                 ),
                 Container(
                   margin: EdgeInsets.all(10),
+                  color: Colors.white,
+                  child: TextField(
+                    controller: numberController,
+                    decoration: InputDecoration(
+                      hintText: "Nuevo numero",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      prefixIcon: Icon(Icons.numbers, size: 20),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.all(10),
                   child: ElevatedButton(
                     onPressed: () {
                       if (!_validateEmails()) {
@@ -165,6 +181,7 @@ class _ModificarPerfilState extends State<ModificarPerfil> {
                                 username: usernameController.text,
                                 email: emailController.text,
                                 age: ageController.text,
+                                number: numberController.text,
                               );
                             },
                           ),

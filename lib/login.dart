@@ -20,6 +20,7 @@ class _loginState extends State<login> {
   String pw = "";
   String cor = "saavedra75@live.com";
   String edad = "20";
+  String number = "3310145888";
 
   validar() {
     if (user.isEmpty || pw.isEmpty) {
@@ -27,7 +28,7 @@ class _loginState extends State<login> {
           SnackBar(content: Text("Debes llenar todos los campos"))
       );
     } else if (user == 'JP' && pw == '123') {
-      guardar_prefs(); // Guardar el usuario en SharedPreferences
+      guardar_prefs();
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
           builder: (BuildContext context) {
@@ -35,6 +36,7 @@ class _loginState extends State<login> {
               username: user,
               email: cor,
               age: edad,
+              number: number,
             );
           },
         ),
@@ -51,7 +53,7 @@ class _loginState extends State<login> {
 
   Future<void> guardar_prefs() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("usuario", user); // Guarda solo el usuario
+    prefs.setString("usuario", user);
   }
 
   Future<void> tomar_datos() async {
@@ -103,7 +105,6 @@ class _loginState extends State<login> {
                       fontSize: 30,
                     ),
                   ),
-                  // Campo para el usuario
                   Container(
                     margin: EdgeInsets.all(10),
                     color: Colors.white,
@@ -116,7 +117,6 @@ class _loginState extends State<login> {
                       ),
                     ),
                   ),
-                  // Campo para la contraseña
                   Container(
                     margin: EdgeInsets.all(10),
                     color: Colors.white,
@@ -130,7 +130,6 @@ class _loginState extends State<login> {
                       ),
                     ),
                   ),
-                  // Botón de inicio de sesión
                   Container(
                     margin: EdgeInsets.all(10),
                     child: ElevatedButton(
@@ -138,7 +137,6 @@ class _loginState extends State<login> {
                         user = username.text.trim();
                         pw = password.text.trim();
 
-                        // Verifica si los campos obligatorios están vacíos
                         if (user.isNotEmpty && pw.isNotEmpty) {
                           validar();
                         } else {

@@ -17,6 +17,7 @@ class _RegisterState extends State<Register> {
   final TextEditingController confirmPasswordController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
+  final TextEditingController numberController = TextEditingController();
 
   @override
   void initState() {
@@ -29,8 +30,9 @@ class _RegisterState extends State<Register> {
     String? email = prefs.getString('email');
     String? username = prefs.getString('username');
     String? age = prefs.getString('age');
+    String? number = prefs.getString('number');
 
-    if (email != null && username != null && age != null) {
+    if (email != null && username != null && age != null && number != null) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (BuildContext context) {
@@ -38,6 +40,7 @@ class _RegisterState extends State<Register> {
               username: username,
               email: email,
               age: age,
+              number: number,
             );
           },
         ),
@@ -51,7 +54,8 @@ class _RegisterState extends State<Register> {
         passwordController.text.isNotEmpty &&
         confirmPasswordController.text.isNotEmpty &&
         usernameController.text.isNotEmpty &&
-        ageController.text.isNotEmpty;
+        ageController.text.isNotEmpty &&
+        numberController.text.isNotEmpty;
   }
 
   bool _validateEmails() {
@@ -77,6 +81,7 @@ class _RegisterState extends State<Register> {
     await prefs.setString('email', emailController.text);
     await prefs.setString('username', usernameController.text);
     await prefs.setString('age', ageController.text);
+    await prefs.setString('number', numberController.text);
   }
 
   void _onComplete() async {
@@ -87,12 +92,13 @@ class _RegisterState extends State<Register> {
     } else if (!_validatePasswords()) {
       _showError("Las contraseñas no coinciden. Por favor, verifica tus datos.");
     } else {
-      await _saveData(); // Guarda los datos cuando todo es válido
+      await _saveData();
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
         return Perfil(
           username: usernameController.text,
           email: emailController.text,
           age: ageController.text,
+          number: numberController.text,
         );
       }));
     }
@@ -182,6 +188,19 @@ class _RegisterState extends State<Register> {
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       hintText: "Edad",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      prefixIcon: Icon(Icons.numbers, size: 20),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.all(10),
+                  color: Colors.white,
+                  child: TextField(
+                    controller: numberController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      hintText: "Numero",
                       hintStyle: TextStyle(color: Colors.grey),
                       prefixIcon: Icon(Icons.numbers, size: 20),
                     ),

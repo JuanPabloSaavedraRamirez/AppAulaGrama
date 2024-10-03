@@ -11,12 +11,14 @@ class Perfil extends StatefulWidget {
   final String username;
   final String email;
   final String age;
+  final String number;
 
   const Perfil({
     super.key,
     required this.username,
     required this.email,
     required this.age,
+    required this.number
   });
 
   @override
@@ -27,6 +29,7 @@ class _PerfilState extends State<Perfil> {
   late String _username;
   late String _email;
   late String _age;
+  late String _number;
   File? _profileImage;
 
   final picker = ImagePicker();
@@ -37,6 +40,7 @@ class _PerfilState extends State<Perfil> {
     _username = widget.username;
     _email = widget.email;
     _age = widget.age;
+    _number = widget.number;
   }
 
   void _clearUserData() async {
@@ -50,6 +54,7 @@ class _PerfilState extends State<Perfil> {
       _username = '';
       _email = '';
       _age = '';
+      _number = '';
       _profileImage = null;
     });
   }
@@ -180,6 +185,7 @@ class _PerfilState extends State<Perfil> {
               _buildProfileInfo('User:', _username),
               _buildProfileInfo('Correo:', _email),
               _buildProfileInfo('Edad:', _age),
+              _buildProfileInfo('Numero:', _number),
               SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -196,7 +202,9 @@ class _PerfilState extends State<Perfil> {
                       return ModificarPerfil(
                           currentEmail: _email,
                           currentUsername: _username,
-                          currentAge: _age);
+                          currentAge: _age,
+                          currentNumber: _number,
+                      );
                     }));
                   }),
                 ],
