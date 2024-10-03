@@ -28,7 +28,7 @@ class Menu extends StatelessWidget {
           UserAccountsDrawerHeader(
             accountName: Text("JP Saavedra"),
             accountEmail: Text("Saavedra75@live.com"),
-            currentAccountPicture: Image.asset("Imagenes/Tbate2.jpg"),
+            currentAccountPicture: Image.asset("Imagenes/LogoAulagramma.jpeg"),
             decoration: BoxDecoration(
               color: Colors.blueAccent,
             ),
