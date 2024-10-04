@@ -1,4 +1,6 @@
+import 'package:app_aulagramma/home.dart';
 import 'package:app_aulagramma/perfil.dart';
+import 'package:app_aulagramma/tienda.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -37,6 +39,38 @@ class Menu extends StatelessWidget {
             margin: EdgeInsets.all(10),
             child: ElevatedButton(
               onPressed: () async {
+
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return home();
+                    },
+                  ),
+                );
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Aula Gramma",
+                    style: TextStyle(
+                      color: Colors.blue[50],
+                    ),
+                  ),
+                ],
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(0),
+                ),
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(10),
+            child: ElevatedButton(
+              onPressed: () async {
                 final datos = await obtenerDatos();
 
                 Navigator.of(context).push(
@@ -57,6 +91,37 @@ class Menu extends StatelessWidget {
                 children: [
                   Text(
                     "Perfil",
+                    style: TextStyle(
+                      color: Colors.blue[50],
+                    ),
+                  ),
+                ],
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(0),
+                ),
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(10),
+            child: ElevatedButton(
+              onPressed: () async {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (BuildContext context) {
+                      return tienda();
+                    },
+                  ),
+                );
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Tienda",
                     style: TextStyle(
                       color: Colors.blue[50],
                     ),

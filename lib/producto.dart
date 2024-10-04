@@ -13,7 +13,7 @@ class _productoState extends State<producto> {
   int contador = 0;
   void agregarCarrito() {
     contador ++;
-    setState(() { //para que se este actualizando y solo lo tiene el stateful
+    setState(() {
       texto = "compro $contador";
     });
   }
@@ -30,31 +30,31 @@ class _productoState extends State<producto> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Stack(
-                  alignment: Alignment.bottomRight, //Acomodar el stack
+                  alignment: Alignment.bottomRight,
                   children: [
-                    Image.asset("Imagenes/Tbate1.jpg"),
+                    Image.asset("Imagenes/LogoAulagramma.jpeg"),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),//darle un pading determinado
+                      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
                       decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.5), //decorar la caja
+                        color: Colors.black.withOpacity(0.5)
                       ),
-                      child: const Text("500 mnx", style: TextStyle(
+                      child: const Text("3500 mnx", style: TextStyle(
                         color: Colors.white,
                       ),),
                     ),
                   ],
                 ),
-                const SizedBox( //Para poder separar
+                const SizedBox(
                   height: 10,
                 ),
-                const Text("Tbate Volumen 7", style: TextStyle(
+                const Text("Curso de ...", style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),),
                 const SizedBox(
                   height: 10,
                 ),
-                const Text("Este es el volumen 7 del libro the beginning after the end", style: TextStyle(
+                const Text("Este curso trata de ....", style: TextStyle(
                   fontSize: 9,
                 ),),
                 const SizedBox(
@@ -69,10 +69,10 @@ class _productoState extends State<producto> {
                   ),),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,
-                    shape: RoundedRectangleBorder( //Para quitarle el redondeo al boton
+                    shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(0)
                     ),
-                    elevation: 20, //para fingir que anda elevador el boton
+                    elevation: 20,
                   ),
                 ),
               ],
