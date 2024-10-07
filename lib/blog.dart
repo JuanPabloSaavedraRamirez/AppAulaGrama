@@ -27,8 +27,10 @@ class _BlogState extends State<Blog> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Blog'),
-        backgroundColor: Colors.blue,
+        title: Text('Blog', style: TextStyle(
+          color:Color(0xFF040F51),
+        ),),
+        backgroundColor: Colors.white,
       ),
       endDrawer: Menu(),
       body: Column(
@@ -69,6 +71,7 @@ class _BlogState extends State<Blog> {
           ),
         ],
       ),
+      backgroundColor: Color(0xFF040F51), // Color de fondo del Scaffolds
     );
   }
 }

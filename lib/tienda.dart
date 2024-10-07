@@ -16,7 +16,9 @@ class _tiendaState extends State<tienda> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text("Tienda"),
+        title: Text("Tienda", style: TextStyle(
+          color: Color(0xFF040F51)
+        ),),
       ),
       endDrawer: Menu(),
       body:
@@ -42,7 +44,7 @@ class _tiendaState extends State<tienda> {
           ),
           Container(
             width: double.infinity,
-            color: Colors.lightBlue,
+            color: Color(0xFF7C8CB2),
             child: ElevatedButton(
               onPressed: (){
                 Navigator.of(context).push(MaterialPageRoute(
@@ -51,10 +53,10 @@ class _tiendaState extends State<tienda> {
                     }));
               },
               child: Text("Confirmar compra", style: TextStyle(
-                color: Colors.white,
+                color: Color(0xFF040C52),
               ),),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.lightBlue,
+                backgroundColor: Color(0xFF7C8CB2),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(0)
                 ),

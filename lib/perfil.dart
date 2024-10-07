@@ -156,9 +156,12 @@ class _PerfilState extends State<Perfil> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: Text("Perfil"),
+        backgroundColor: Colors.white,
+        title: Text("Perfil", style: TextStyle(
+          color: Color(0xFF040F51)
+        ),),
       ),
+      backgroundColor: Color(0xFF040C52),
       body: ListView(
         padding: EdgeInsets.all(20),
         children: [
@@ -231,7 +234,7 @@ class _PerfilState extends State<Perfil> {
         children: [
           Container(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            color: Colors.blue,
+            color: Color(0xFF2D366F),
             child: Text(
               label,
               style: TextStyle(
@@ -240,7 +243,7 @@ class _PerfilState extends State<Perfil> {
             ),
           ),
           Container(
-            color: Colors.grey,
+            color: Color(0xFFD0DBF3),
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Text(value.isEmpty ? 'Sin datos' : value),
           ),
@@ -257,11 +260,11 @@ class _PerfilState extends State<Perfil> {
         child: Text(
           label,
           style: TextStyle(
-            color: Colors.blue[50],
+            color: Color(0xFF040C52),
           ),
         ),
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.blue,
+          backgroundColor: Color(0xFF7C8CB2),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(0),
           ),

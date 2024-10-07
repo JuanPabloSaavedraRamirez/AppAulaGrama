@@ -18,7 +18,7 @@ class _pantallaConfirmarState extends State<pantallaConfirmar> {
             content: SingleChildScrollView(
               child: ListBody(
                 children: [
-                  Text("Gracias por comprar el volumen 7 de tbate")
+                  Text("Gracias por comprar el curso")
                 ],
               ),
             ),
@@ -37,8 +37,10 @@ class _pantallaConfirmarState extends State<pantallaConfirmar> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.orange,
-        title: Text("Confirmar compra"),
+        backgroundColor: Colors.white,
+        title: Text("Confirmar compra", style: TextStyle(
+          color: Color(0xFF040F51)
+        ),),
       ),
       body: ListView(
         children: [
@@ -76,6 +78,7 @@ class _pantallaConfirmarState extends State<pantallaConfirmar> {
           )
         ],
       ),
+      backgroundColor: Color(0xFF040C52),
     );
   }
 }

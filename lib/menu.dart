@@ -51,11 +51,15 @@ class _MenuState extends State<Menu> {
       child: ListView(
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text(username.isNotEmpty ? username : "Usuario"),
-            accountEmail: Text(email.isNotEmpty ? email : "email@example.com"),
+            accountName: Text(username.isNotEmpty ? username : "Usuario", style: TextStyle(
+              color: Color(0xFFD0DBF3),
+            ),),
+            accountEmail: Text(email.isNotEmpty ? email : "email@example.com", style: TextStyle(
+              color: Color(0xFFD0DBF3)
+            ),),
             currentAccountPicture: Image.asset("Imagenes/LogoAulagramma.jpeg"),
             decoration: BoxDecoration(
-              color: Colors.blueAccent,
+              color: Color(0xFF040C52),
             ),
           ),
           Container(
@@ -76,13 +80,13 @@ class _MenuState extends State<Menu> {
                   Text(
                     "Aula Gramma",
                     style: TextStyle(
-                      color: Colors.blue[50],
+                      color: Color(0xFFD0DBF3),
                     ),
                   ),
                 ],
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
+                backgroundColor: Color(0xFF040C52),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(0),
                 ),
@@ -112,13 +116,13 @@ class _MenuState extends State<Menu> {
                   Text(
                     "Perfil",
                     style: TextStyle(
-                      color: Colors.blue[50],
+                      color: Color(0xFFD0DBF3),
                     ),
                   ),
                 ],
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
+                backgroundColor: Color(0xFF040C52),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(0),
                 ),
@@ -143,13 +147,13 @@ class _MenuState extends State<Menu> {
                   Text(
                     "Tienda",
                     style: TextStyle(
-                      color: Colors.blue[50],
+                      color: Color(0xFFD0DBF3),
                     ),
                   ),
                 ],
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
+                backgroundColor: Color(0xFF040C52),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(0),
                 ),
@@ -174,13 +178,13 @@ class _MenuState extends State<Menu> {
                   Text(
                     "Blog",
                     style: TextStyle(
-                      color: Colors.blue[50],
+                      color: Color(0xFFD0DBF3),
                     ),
                   ),
                 ],
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
+                backgroundColor: Color(0xFF040C52),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(0),
                 ),
@@ -189,6 +193,7 @@ class _MenuState extends State<Menu> {
           ),
         ],
       ),
+
     );
   }
 }

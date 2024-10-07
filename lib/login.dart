@@ -89,10 +89,12 @@ class _loginState extends State<login> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue[800],
-        title: Text("Login"),
+          backgroundColor: Colors.white,
+        title: Text("Login", style: TextStyle(
+          color:Color(0xFF040F51),
+        ),),
       ),
-      backgroundColor: Colors.blue[800],
+      backgroundColor: Color(0xFF040F51),
       body: GestureDetector(
         onTap: () {
           final FocusScopeNode focus = FocusScope.of(context);
@@ -104,7 +106,7 @@ class _loginState extends State<login> {
           children: [
             Container(
               margin: EdgeInsets.all(10),
-              color: Colors.blue,
+              color: Color(0xFF2D366F),
               child: Column(
                 children: [
                   Padding(padding: EdgeInsets.all(20)),
@@ -112,7 +114,7 @@ class _loginState extends State<login> {
                     "Bienvenido",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.blue[50],
+                      color: Color(0xFFD0DBF3),
                       fontSize: 30,
                     ),
                   ),
@@ -152,12 +154,12 @@ class _loginState extends State<login> {
                         children: [
                           Text(
                             "Login",
-                            style: TextStyle(color: Colors.black),
+                            style: TextStyle(color: Color(0xFF040C52)),
                           ),
                         ],
                       ),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue[100],
+                        backgroundColor: Color(0xFF7C8CB2),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(0),
                         ),
@@ -183,12 +185,12 @@ class _loginState extends State<login> {
                         children: [
                           Text(
                             "¿No tienes cuenta? Regístrate",
-                            style: TextStyle(color: Colors.blue[50]),
+                            style: TextStyle(color: Color(0xFF040C52)),
                           ),
                         ],
                       ),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
+                        backgroundColor: Color(0xFF7C8CB2),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(0),
                         ),

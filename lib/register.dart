@@ -109,10 +109,12 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: Text("Registro"),
+        backgroundColor: Colors.white,
+        title: Text("Registro", style: TextStyle(
+          color: Color(0xFF040F51)
+        ),),
       ),
-      backgroundColor: Colors.blue,
+      backgroundColor: Color(0xFF040C52),
       body: ListView(
         children: [
           Container(
@@ -217,13 +219,13 @@ class _RegisterState extends State<Register> {
                         Text(
                           "Completar",
                           style: TextStyle(
-                            color: Colors.blue[50],
+                            color: Color(0xFF040C52),
                           ),
                         ),
                       ],
                     ),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
+                      backgroundColor: Color(0xFF7C8CB2),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(0),
                       ),
@@ -244,13 +246,13 @@ class _RegisterState extends State<Register> {
                         Text(
                           "¿Ya tienes cuenta? Inicia sesión",
                           style: TextStyle(
-                            color: Colors.blue[50],
+                            color: Color(0xFF040C52),
                           ),
                         ),
                       ],
                     ),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
+                      backgroundColor: Color(0xFF7C8CB2),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(0),
                       ),

@@ -36,7 +36,7 @@ class _productoState extends State<producto> {
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
                       decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.5)
+                        color: Color(0xFFD0DBF3).withOpacity(0.5)
                       ),
                       child: const Text("3500 mnx", style: TextStyle(
                         color: Colors.white,
@@ -50,12 +50,14 @@ class _productoState extends State<producto> {
                 const Text("Curso de ...", style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
+                  color: Color(0xFF040F51)
                 ),),
                 const SizedBox(
                   height: 10,
                 ),
                 const Text("Este curso trata de ....", style: TextStyle(
                   fontSize: 9,
+                  color: Color(0xFF040F51)
                 ),),
                 const SizedBox(
                   height: 10,
@@ -65,10 +67,10 @@ class _productoState extends State<producto> {
                     agregarCarrito();
                   },
                   child: Text(texto, style: TextStyle(
-                    color: Colors.white,
+                    color: Color(0xFF040C52),
                   ),),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
+                    backgroundColor: Color(0xFF7C8CB2),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(0)
                     ),

@@ -82,10 +82,12 @@ class _ModificarPerfilState extends State<ModificarPerfil> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: Text("Modificar perfil"),
+        backgroundColor: Colors.white,
+        title: Text("Modificar perfil", style: TextStyle(
+          color: Color(0xFF040F51)
+        ),),
       ),
-      backgroundColor: Colors.blue,
+      backgroundColor: Color(0xFF040C52),
       body: ListView(
         children: [
           Container(
@@ -209,13 +211,13 @@ class _ModificarPerfilState extends State<ModificarPerfil> {
                         Text(
                           "Confirmar",
                           style: TextStyle(
-                            color: Colors.blue[50],
+                            color: Color(0xFF040C52),
                           ),
                         ),
                       ],
                     ),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
+                      backgroundColor: Color(0xFF7C8CB2),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(0),
                       ),
