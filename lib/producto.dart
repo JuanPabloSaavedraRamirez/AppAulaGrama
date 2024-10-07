@@ -60,7 +60,7 @@ class _productoState extends State<producto> {
                 const SizedBox(
                   height: 10,
                 ),
-                ElevatedButton( //un boton
+                ElevatedButton(
                   onPressed: (){
                     agregarCarrito();
                   },

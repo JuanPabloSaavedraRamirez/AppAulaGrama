@@ -45,6 +45,19 @@ class _ModificarPerfilState extends State<ModificarPerfil> {
     return passwordController.text == confirmPasswordController.text;
   }
 
+  bool _validateFields() {
+    if (emailController.text.isEmpty ||
+        confirmEmailController.text.isEmpty ||
+        passwordController.text.isEmpty ||
+        confirmPasswordController.text.isEmpty ||
+        usernameController.text.isEmpty ||
+        ageController.text.isEmpty ||
+        numberController.text.isEmpty) {
+      return false;
+    }
+    return true;
+  }
+
   void _showError(String message) {
     showDialog(
       context: context,
@@ -169,7 +182,9 @@ class _ModificarPerfilState extends State<ModificarPerfil> {
                   margin: EdgeInsets.all(10),
                   child: ElevatedButton(
                     onPressed: () {
-                      if (!_validateEmails()) {
+                      if (!_validateFields()) {
+                        _showError("Hay campos vacíos. Por favor, completa todos los campos.");
+                      } else if (!_validateEmails()) {
                         _showError("Los correos no coinciden. Por favor, verifica tus datos.");
                       } else if (!_validatePasswords()) {
                         _showError("Las contraseñas no coinciden. Por favor, verifica tus datos.");

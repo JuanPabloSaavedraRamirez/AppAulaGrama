@@ -18,12 +18,12 @@ class _tiendaState extends State<tienda> {
         automaticallyImplyLeading: false,
         title: Text("Tienda"),
       ),
-      endDrawer: Menu(), //crear un drawer llamando al manu
+      endDrawer: Menu(),
       body:
       Column(
         children: [
           Expanded(
-            child: ListView( //Para hacer scroll
+            child: ListView(
               children: [
                 Row(
                   children: [
@@ -45,19 +45,10 @@ class _tiendaState extends State<tienda> {
             color: Colors.lightBlue,
             child: ElevatedButton(
               onPressed: (){
-
-                //Opcion 1 carga una nueva pantalla
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (BuildContext context){
                       return new pantallaConfirmar();
                     }));
-
-                //Opcion 2 esta desaparece la anterior y carga una nueva
-                /*Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-                    builder:(BuildContext context) {
-                      return new pantallaConfirmar();
-                    }), (Route) => false);*/
-
               },
               child: Text("Confirmar compra", style: TextStyle(
                 color: Colors.white,

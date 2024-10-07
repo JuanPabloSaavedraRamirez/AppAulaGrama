@@ -10,7 +10,7 @@ class pantallaConfirmar extends StatefulWidget {
 class _pantallaConfirmarState extends State<pantallaConfirmar> {
 
   void mostrarAlerta(){
-    showDialog( //hace que aparezca como un cuadro de confirmacion o sobre encimado
+    showDialog(
         context: context,
         builder: (BuildContext context){
           return AlertDialog(

@@ -1,7 +1,5 @@
-import 'package:app_aulagramma/login.dart';
 import 'package:app_aulagramma/register.dart';
-import 'package:flutter/material.dart'; //Este es para android
-import 'tienda.dart';
+import 'package:flutter/material.dart';
 
 void main(){
   runApp(app());

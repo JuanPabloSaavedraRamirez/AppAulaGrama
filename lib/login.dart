@@ -1,6 +1,5 @@
 import 'package:app_aulagramma/perfil.dart';
 import 'package:app_aulagramma/register.dart';
-import 'package:app_aulagramma/tienda.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,23 +11,23 @@ class login extends StatefulWidget {
 }
 
 class _loginState extends State<login> {
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
-  final username = TextEditingController();
-  final password = TextEditingController();
-
-  String user = "";
-  String pw = "";
   String cor = "saavedra75@live.com";
   String edad = "20";
   String number = "3310145888";
 
-  validar() {
+  void validar() {
+    final String user = usernameController.text.trim();
+    final String pw = passwordController.text.trim();
+
     if (user.isEmpty || pw.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Debes llenar todos los campos"))
+        SnackBar(content: Text("Debes llenar todos los campos")),
       );
     } else if (user == 'JP' && pw == '123') {
-      guardar_prefs();
+      guardar_prefs(user);
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
           builder: (BuildContext context) {
@@ -44,34 +43,46 @@ class _loginState extends State<login> {
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Usuario o contraseña incorrectos"))
+        SnackBar(content: Text("Usuario o contraseña incorrectos")),
       );
-      username.text = '';
-      password.text = '';
+      usernameController.clear();
+      passwordController.clear();
     }
   }
 
-  Future<void> guardar_prefs() async {
+  Future<void> guardar_prefs(String user) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("usuario", user);
+    await prefs.setString("usuario", user);
+    await prefs.setString("loginEmail", cor);
+    await prefs.setString("loginAge", edad);
+    await prefs.setString("loginNumber", number);
   }
 
   Future<void> tomar_datos() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    user = prefs.getString("usuario") ?? '';
+    final String? storedUser = prefs.getString("username");
 
-    if (user.isNotEmpty) {
+    if (storedUser != null && storedUser.isNotEmpty) {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (BuildContext context) {
-          return tienda();
-        }),
+        MaterialPageRoute(
+          builder: (BuildContext context) {
+            return Perfil(
+              username: storedUser,
+              email: cor,
+              age: edad,
+              number: number,
+            );
+          },
+        ),
       );
     }
   }
 
+
   @override
   void initState() {
     super.initState();
+
   }
 
   @override
@@ -79,7 +90,7 @@ class _loginState extends State<login> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue[800],
-        title: Text(""),
+        title: Text("Login"),
       ),
       backgroundColor: Colors.blue[800],
       body: GestureDetector(
@@ -109,9 +120,9 @@ class _loginState extends State<login> {
                     margin: EdgeInsets.all(10),
                     color: Colors.white,
                     child: TextField(
-                      controller: username,
+                      controller: usernameController,
                       decoration: InputDecoration(
-                        hintText: " Usuario",
+                        hintText: "Usuario",
                         hintStyle: TextStyle(color: Colors.grey),
                         prefixIcon: Icon(Icons.person, size: 20),
                       ),
@@ -121,10 +132,10 @@ class _loginState extends State<login> {
                     margin: EdgeInsets.all(10),
                     color: Colors.white,
                     child: TextField(
-                      controller: password,
+                      controller: passwordController,
                       obscureText: true,
                       decoration: InputDecoration(
-                        hintText: " Contraseña",
+                        hintText: "Contraseña",
                         hintStyle: TextStyle(color: Colors.grey),
                         prefixIcon: Icon(Icons.lock, size: 20),
                       ),
@@ -134,30 +145,14 @@ class _loginState extends State<login> {
                     margin: EdgeInsets.all(10),
                     child: ElevatedButton(
                       onPressed: () {
-                        user = username.text.trim();
-                        pw = password.text.trim();
-
-                        if (user.isNotEmpty && pw.isNotEmpty) {
-                          validar();
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("Debes llenar los campos obligatorios"))
-                          );
-                        }
-
-                        final FocusScopeNode focus = FocusScope.of(context);
-                        if (!focus.hasPrimaryFocus && focus.hasFocus) {
-                          FocusManager.instance.primaryFocus?.unfocus();
-                        }
+                        validar();
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            " Login",
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
+                            "Login",
+                            style: TextStyle(color: Colors.black),
                           ),
                         ],
                       ),
@@ -171,9 +166,7 @@ class _loginState extends State<login> {
                   ),
                   Text(
                     "¿Perdiste tu contraseña?",
-                    style: TextStyle(
-                      color: Colors.blue[50],
-                    ),
+                    style: TextStyle(color: Colors.blue[50]),
                   ),
                   Container(
                     margin: EdgeInsets.all(10),
@@ -189,10 +182,8 @@ class _loginState extends State<login> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            " ¿No tienes cuenta? Regístrate",
-                            style: TextStyle(
-                              color: Colors.blue[50],
-                            ),
+                            "¿No tienes cuenta? Regístrate",
+                            style: TextStyle(color: Colors.blue[50]),
                           ),
                         ],
                       ),
