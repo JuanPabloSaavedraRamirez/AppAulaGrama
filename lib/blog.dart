@@ -27,9 +27,12 @@ class _BlogState extends State<Blog> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Blog', style: TextStyle(
-          color:Color(0xFF040F51),
-        ),),
+        title: Text(
+          'Blog',
+          style: TextStyle(
+            color: Color(0xFF040F51),
+          ),
+        ),
         backgroundColor: Colors.white,
       ),
       endDrawer: Menu(),
@@ -44,12 +47,22 @@ class _BlogState extends State<Blog> {
                     controller: _controller,
                     decoration: InputDecoration(
                       labelText: 'Escribe una nueva entrada',
-                      border: OutlineInputBorder(),
+                      labelStyle: TextStyle(color: Color(0xFF040F51)),
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                        borderSide: BorderSide(color: Colors.grey),
+                      ),
                     ),
                   ),
                   SizedBox(height: 10),
                   ElevatedButton(
                     onPressed: _addPost,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF7C8CB2),
+                      foregroundColor: Color(0xFF040C52),
+                    ),
                     child: Text('Agregar entrada'),
                   ),
                 ],
@@ -63,7 +76,10 @@ class _BlogState extends State<Blog> {
                   margin: const EdgeInsets.all(10),
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Text(blogPosts[index]),
+                    child: Text(
+                      blogPosts[index],
+                      style: TextStyle(color: Color(0xFF040F51)),
+                    ),
                   ),
                 );
               },
@@ -71,7 +87,7 @@ class _BlogState extends State<Blog> {
           ),
         ],
       ),
-      backgroundColor: Color(0xFF040F51), // Color de fondo del Scaffolds
+      backgroundColor: Color(0xFF040F51),
     );
   }
 }

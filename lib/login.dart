@@ -24,7 +24,8 @@ class _loginState extends State<login> {
 
     if (user.isEmpty || pw.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Debes llenar todos los campos")),
+        SnackBar(content: Text("Debes llenar todos los campos", style: TextStyle(color: Colors.white),),
+          backgroundColor: Colors.red,),
       );
     } else if (user == 'JP' && pw == '123') {
       guardar_prefs(user);
@@ -43,7 +44,8 @@ class _loginState extends State<login> {
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Usuario o contraseña incorrectos")),
+        SnackBar(content: Text("Usuario o contraseña incorrectos"),
+        backgroundColor: Colors.red,),
       );
       usernameController.clear();
       passwordController.clear();

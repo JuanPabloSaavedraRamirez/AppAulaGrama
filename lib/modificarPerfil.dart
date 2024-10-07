@@ -185,11 +185,17 @@ class _ModificarPerfilState extends State<ModificarPerfil> {
                   child: ElevatedButton(
                     onPressed: () {
                       if (!_validateFields()) {
-                        _showError("Hay campos vacíos. Por favor, completa todos los campos.");
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Debes llenar todos los campos"),
+                            backgroundColor: Colors.red,));
                       } else if (!_validateEmails()) {
-                        _showError("Los correos no coinciden. Por favor, verifica tus datos.");
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Los correos no coinciden. Por favor, verifica tus datos."),
+                              backgroundColor: Colors.red,));
                       } else if (!_validatePasswords()) {
-                        _showError("Las contraseñas no coinciden. Por favor, verifica tus datos.");
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Las contraseñas no coinciden. Por favor, verifica tus datos."),
+                              backgroundColor: Colors.red,));
                       } else {
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(

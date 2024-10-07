@@ -14,11 +14,16 @@ class _pantallaConfirmarState extends State<pantallaConfirmar> {
         context: context,
         builder: (BuildContext context){
           return AlertDialog(
-            title: Text("¡Gracias por comprar!"),
+            backgroundColor: Color(0xFFD0DBF3),
+            title: Text("¡Gracias por comprar!", style: TextStyle(
+              color: Color(0xFF040F51)
+            ),),
             content: SingleChildScrollView(
               child: ListBody(
                 children: [
-                  Text("Gracias por comprar el curso")
+                  Text("Gracias por comprar el curso", style: TextStyle(
+                    color: Color(0xFF040F51)
+                  ),)
                 ],
               ),
             ),
@@ -27,7 +32,9 @@ class _pantallaConfirmarState extends State<pantallaConfirmar> {
                   onPressed: (){
                     Navigator.of(context).pop();
                   },
-                  child: Text("Aceptar"))
+                  child: Text("Aceptar", style: TextStyle(
+                    color: Colors.black
+                  ),))
             ],
           );
         });

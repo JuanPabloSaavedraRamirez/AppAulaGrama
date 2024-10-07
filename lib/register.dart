@@ -87,11 +87,17 @@ class _RegisterState extends State<Register> {
 
   void _onComplete() async {
     if (!_validateFields()) {
-      _showError("Por favor, completa todos los campos.");
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Debes llenar todos los campos"),
+            backgroundColor: Colors.red,));
     } else if (!_validateEmails()) {
-      _showError("Los correos no coinciden. Por favor, verifica tus datos.");
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Los correos no coinciden. Por favor, verifica tus datos."),
+            backgroundColor: Colors.red,));
     } else if (!_validatePasswords()) {
-      _showError("Las contraseñas no coinciden. Por favor, verifica tus datos.");
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Las contraseñas no coinciden. Por favor, verifica tus datos."),
+            backgroundColor: Colors.red,));
     } else {
       await _saveData();
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
