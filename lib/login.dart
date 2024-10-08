@@ -54,7 +54,7 @@ class _loginState extends State<login> {
 
   Future<void> guardar_prefs(String user) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString("usuario", user);
+    await prefs.setString("username", user);
     await prefs.setString("loginEmail", cor);
     await prefs.setString("loginAge", edad);
     await prefs.setString("loginNumber", number);
@@ -81,10 +81,11 @@ class _loginState extends State<login> {
   }
 
 
+
   @override
   void initState() {
     super.initState();
-
+    tomar_datos();
   }
 
   @override
