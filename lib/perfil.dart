@@ -130,7 +130,7 @@ class _PerfilState extends State<Perfil> {
   Future<void> _saveImageToStorage(File imageFile) async {
     final directory = await getApplicationDocumentsDirectory();
     final imagePath = '${directory.path}/profile_image.png';
-    
+
     final savedImage = await imageFile.copy(imagePath);
 
     final prefs = await SharedPreferences.getInstance();

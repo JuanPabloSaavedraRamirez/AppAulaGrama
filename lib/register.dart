@@ -28,8 +28,8 @@ class _RegisterState extends State<Register> {
   void _checkLoggedIn() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    String? username = prefs.getString('username');
-    String? password = prefs.getString('password');
+    String? username = prefs.getString('user');
+    String? password = prefs.getString('pw');
 
     if (username != null && password != null) {
       Navigator.of(context).pushReplacement(
