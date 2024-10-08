@@ -27,26 +27,40 @@ class _RegisterState extends State<Register> {
 
   void _checkLoggedIn() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? email = prefs.getString('email');
-    String? username = prefs.getString('username');
-    String? age = prefs.getString('age');
-    String? number = prefs.getString('number');
 
-    if (email != null && username != null && age != null && number != null) {
+    String? username = prefs.getString('username');
+    String? password = prefs.getString('password');
+
+    if (username != null && password != null) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (BuildContext context) {
-            return Perfil(
-              username: username,
-              email: email,
-              age: age,
-              number: number,
-            );
+            return login();
           },
         ),
       );
+    } else {
+      String? email = prefs.getString('email');
+      String? age = prefs.getString('age');
+      String? number = prefs.getString('number');
+
+      if (email != null && username != null && age != null && number != null) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (BuildContext context) {
+              return Perfil(
+                username: username,
+                email: email,
+                age: age,
+                number: number,
+              );
+            },
+          ),
+        );
+      }
     }
   }
+
 
   bool _validateFields() {
     return emailController.text.isNotEmpty &&
@@ -242,9 +256,14 @@ class _RegisterState extends State<Register> {
                   margin: EdgeInsets.all(10),
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
-                        return login();
-                      }));
+                      Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                          builder: (BuildContext context) {
+                            return login();
+                          },
+                        ),
+                            (Route<dynamic> route) => false, // Esta es la condición que faltaba para la función pushAndRemoveUntil
+                      );
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -265,6 +284,7 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                 ),
+
               ],
             ),
           ),
