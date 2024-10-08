@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:path_provider/path_provider.dart';
 
 class Perfil extends StatefulWidget {
   final String username;
@@ -41,6 +42,17 @@ class _PerfilState extends State<Perfil> {
     _email = widget.email;
     _age = widget.age;
     _number = widget.number;
+    _loadProfileImage();
+  }
+
+  Future<void> _loadProfileImage() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? imagePath = prefs.getString('profileImage');
+    if (imagePath != null && imagePath.isNotEmpty) {
+      setState(() {
+        _profileImage = File(imagePath);
+      });
+    }
   }
 
   void _clearUserData() async {
@@ -49,6 +61,7 @@ class _PerfilState extends State<Perfil> {
     await prefs.remove('username');
     await prefs.remove('email');
     await prefs.remove('age');
+    await prefs.remove('profileImage');
 
     setState(() {
       _username = '';
@@ -110,7 +123,18 @@ class _PerfilState extends State<Perfil> {
       setState(() {
         _profileImage = File(croppedFile.path);
       });
+      _saveImageToStorage(File(croppedFile.path));
     }
+  }
+
+  Future<void> _saveImageToStorage(File imageFile) async {
+    final directory = await getApplicationDocumentsDirectory();
+    final imagePath = '${directory.path}/profile_image.png';
+    
+    final savedImage = await imageFile.copy(imagePath);
+
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('profileImage', savedImage.path);
   }
 
   void _showImageOptions() {
@@ -158,7 +182,7 @@ class _PerfilState extends State<Perfil> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text("Perfil", style: TextStyle(
-          color: Color(0xFF040F51)
+            color: Color(0xFF040F51)
         ),),
       ),
       backgroundColor: Color(0xFF040C52),
@@ -203,10 +227,10 @@ class _PerfilState extends State<Perfil> {
                     Navigator.of(context)
                         .push(MaterialPageRoute(builder: (BuildContext context) {
                       return ModificarPerfil(
-                          currentEmail: _email,
-                          currentUsername: _username,
-                          currentAge: _age,
-                          currentNumber: _number,
+                        currentEmail: _email,
+                        currentUsername: _username,
+                        currentAge: _age,
+                        currentNumber: _number,
                       );
                     }));
                   }),
