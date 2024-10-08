@@ -58,13 +58,16 @@ class _loginState extends State<login> {
     await prefs.setString("loginEmail", cor);
     await prefs.setString("loginAge", edad);
     await prefs.setString("loginNumber", number);
+    await prefs.setBool("inicioSesion", true);
   }
 
   Future<void> tomar_datos() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? storedUser = prefs.getString("username");
 
+
     if (storedUser != null && storedUser.isNotEmpty) {
+      print("object");
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (BuildContext context) {

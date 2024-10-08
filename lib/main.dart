@@ -1,3 +1,4 @@
+import 'package:app_aulagramma/login.dart';
 import 'package:app_aulagramma/register.dart';
 import 'package:flutter/material.dart';
 
@@ -5,8 +6,12 @@ void main(){
   runApp(app());
 }
 
+
+
 class app extends StatelessWidget {
   const app({super.key});
+
+  final bool inicioSesion = false;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +21,8 @@ class app extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true
       ),
-      home: Register(),
+
+      home: inicioSesion ? login() : Register(),
     );
   }
 }
