@@ -1,7 +1,5 @@
-import 'package:app_aulagramma/login.dart';
 import 'package:flutter/material.dart';
-import 'package:app_aulagramma/perfil.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class RegisterBD extends StatefulWidget {
   const RegisterBD ({super.key});
@@ -17,41 +15,30 @@ class _RegisterStateBD extends State<RegisterBD> {
   final TextEditingController ageController = TextEditingController();
   final TextEditingController numberController = TextEditingController();
 
-  bool _validateFields() {
-    return emailController.text.isNotEmpty &&
-        passwordController.text.isNotEmpty &&
-        usernameController.text.isNotEmpty &&
-        ageController.text.isNotEmpty &&
-        numberController.text.isNotEmpty;
+  String user = "";
+  String correo = "";
+  String pass = "";
+  String date = "";
+  String Number = "";
+
+  void complete(){
+    user = usernameController.text;
+    correo = emailController.text;
+    pass = passwordController.text;
+    date = ageController.text;
+    Number = numberController.text;
   }
 
-  void _showError(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: Colors.red,
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
-  }
-
-
-
-  void _onComplete() async {
-    if (!_validateFields()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Debes llenar todos los campos"),
-            backgroundColor: Colors.red,));
-    } else {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) {
-        return Perfil(
-          username: usernameController.text,
-          email: emailController.text,
-          age: ageController.text,
-          number: numberController.text,
-        );
-      }));
-    }
+  Future<void> register() async{
+    var url = Uri.https('api.aulagrammae.com', 'apps/register.php');
+    var response = await http.post(url, body:{
+      'User': user,
+      'Correo': correo,
+      'Password': pass,
+      'FechaDeNacimiento': date,
+      'Numero': Number,
+    });
+    print('Respuesta: ' + response.body);
   }
 
   @override
@@ -136,7 +123,7 @@ class _RegisterStateBD extends State<RegisterBD> {
                 Container(
                   margin: EdgeInsets.all(10),
                   child: ElevatedButton(
-                    onPressed: _onComplete,
+                    onPressed: complete,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
