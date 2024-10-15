@@ -1,4 +1,5 @@
 import 'package:app_aulagramma/register.dart';
+import 'package:app_aulagramma/registerBD.dart';
 import 'package:flutter/material.dart';
 
 void main(){
@@ -16,7 +17,7 @@ class app extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true
       ),
-      home: Register(),
+      home: RegisterBD(),
     );
   }
 }
