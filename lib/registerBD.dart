@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as https;
 
 class RegisterBD extends StatefulWidget {
   const RegisterBD ({super.key});
@@ -27,11 +27,12 @@ class _RegisterStateBD extends State<RegisterBD> {
     pass = passwordController.text;
     date = ageController.text;
     Number = numberController.text;
+    register();
   }
 
   Future<void> register() async{
     var url = Uri.https('api.aulagrammae.com', 'apps/register.php');
-    var response = await http.post(url, body:{
+    var response = await https.post(url, body:{
       'User': user,
       'Correo': correo,
       'Password': pass,
