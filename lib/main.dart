@@ -1,3 +1,4 @@
+import 'package:app_aulagramma/Productos.dart';
 import 'package:app_aulagramma/loginBD.dart';
 import 'package:app_aulagramma/register.dart';
 import 'package:app_aulagramma/registerBD.dart';
@@ -18,7 +19,7 @@ class app extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true
       ),
-      home: loginBD(),
+      home: Productos(),
     );
   }
 }
