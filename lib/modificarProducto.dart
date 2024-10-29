@@ -1,15 +1,19 @@
-import 'package:app_aulagramma/Productos.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as https;
 
-class add_producto extends StatefulWidget {
-  const add_producto({super.key});
+class modificarProducto extends StatefulWidget {
+  String? id;
+  String? nombre;
+  String? descripcion;
+  String? precio;
+  modificarProducto(this.id, this.nombre,this.descripcion, this.precio, {super.key});
 
   @override
-  State<add_producto> createState() => _add_productoState();
+  State<modificarProducto> createState() => _modificarProductoState();
 }
 
-class _add_productoState extends State<add_producto> {
+class _modificarProductoState extends State<modificarProducto> {
+
   final TextEditingController nameProductController = TextEditingController();
   final TextEditingController descProductController = TextEditingController();
   final TextEditingController priceProductController = TextEditingController();
@@ -17,23 +21,42 @@ class _add_productoState extends State<add_producto> {
   String nameP = "";
   String desP = "";
   String priceP = "";
+  String idP = "";
 
   void complete(){
     nameP = nameProductController.text;
     desP = descProductController.text;
     priceP = priceProductController.text;
-    addProduct();
+    modificar();
   }
 
-  Future<void> addProduct() async{
-    var url = Uri.https('api.aulagrammae.com', 'apps/add_product.php');
+  Future<void> modificar() async{
+    var url = Uri.https('api.aulagrammae.com', 'apps/mod_product.php');
     var response = await https.post(url, body:{
       'nombre': nameP,
       'descripcion': desP,
       'precio': priceP,
+      'id': widget.id,
     });
     print('Respuesta: ' + response.body);
-    Navigator.of(context).pop();
+
+    if (response.body == "1"){
+      Navigator.of(context).pop();
+    }else{
+      print(response.body);
+    }
+    //Navigator.of(context).pop();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      nameProductController.text = widget.nombre!;
+      descProductController.text = widget.descripcion!;
+      priceProductController.text = widget.precio!;
+    });
   }
 
   @override
@@ -41,8 +64,8 @@ class _add_productoState extends State<add_producto> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text("Agregar producto", style: TextStyle(
-            //color: Color(0xFF040F51)
+        title: Text("Modificar producto", style: TextStyle(
+          //color: Color(0xFF040F51)
         ),),
       ),
       //backgroundColor: Color(0xFF040C52),
