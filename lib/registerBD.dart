@@ -1,8 +1,9 @@
+import 'package:app_aulagramma/loginBD.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as https;
 
 class RegisterBD extends StatefulWidget {
-  const RegisterBD ({super.key});
+  const RegisterBD({super.key});
 
   @override
   State<RegisterBD> createState() => _RegisterStateBD();
@@ -10,7 +11,9 @@ class RegisterBD extends StatefulWidget {
 
 class _RegisterStateBD extends State<RegisterBD> {
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController confirmEmailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
   final TextEditingController numberController = TextEditingController();
@@ -19,25 +22,70 @@ class _RegisterStateBD extends State<RegisterBD> {
   String correo = "";
   String pass = "";
   String date = "";
-  String Number = "";
+  String number = "";
 
-  void complete(){
-    user = usernameController.text;
-    correo = emailController.text;
-    pass = passwordController.text;
-    date = ageController.text;
-    Number = numberController.text;
-    register();
+  void complete() {
+    if (_verifyFields()) {
+      user = usernameController.text;
+      correo = emailController.text;
+      pass = passwordController.text;
+      date = ageController.text;
+      number = numberController.text;
+      register();
+    }
   }
 
-  Future<void> register() async{
+  bool _verifyFields() {
+    // Verificar campos vacíos
+    if (usernameController.text.isEmpty ||
+        emailController.text.isEmpty ||
+        confirmEmailController.text.isEmpty ||
+        passwordController.text.isEmpty ||
+        confirmPasswordController.text.isEmpty ||
+        ageController.text.isEmpty ||
+        numberController.text.isEmpty) {
+      _showAlertDialog("Error", "Falta llenar un campo.");
+      return false;
+    }
+    // Verificar que los correos coincidan
+    if (emailController.text != confirmEmailController.text) {
+      _showAlertDialog("Error", "Los correos electrónicos no coinciden.");
+      return false;
+    }
+    // Verificar que las contraseñas coincidan
+    if (passwordController.text != confirmPasswordController.text) {
+      _showAlertDialog("Error", "Las contraseñas no coinciden.");
+      return false;
+    }
+    return true;
+  }
+
+  void _showAlertDialog(String title, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> register() async {
     var url = Uri.https('api.aulagrammae.com', 'apps/register.php');
-    var response = await https.post(url, body:{
+    var response = await https.post(url, body: {
       'User': user,
       'Correo': correo,
       'Password': pass,
       'FechaDeNacimiento': date,
-      'Numero': Number,
+      'Numero': number,
     });
     print('Respuesta: ' + response.body);
   }
@@ -47,9 +95,7 @@ class _RegisterStateBD extends State<RegisterBD> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text("Registro para base de datos", style: TextStyle(
-            color: Color(0xFF040F51)
-        ),),
+        title: Text("Registrate", style: TextStyle(color: Color(0xFF040F51))),
       ),
       backgroundColor: Color(0xFF040C52),
       body: ListView(
@@ -58,69 +104,13 @@ class _RegisterStateBD extends State<RegisterBD> {
             margin: EdgeInsets.all(10),
             child: Column(
               children: [
-                Container(
-                  margin: EdgeInsets.all(10),
-                  color: Colors.white,
-                  child: TextField(
-                    controller: emailController,
-                    decoration: InputDecoration(
-                      hintText: "Correo",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      prefixIcon: Icon(Icons.email, size: 20),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.all(10),
-                  color: Colors.white,
-                  child: TextField(
-                    controller: passwordController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      hintText: "Contraseña",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      prefixIcon: Icon(Icons.lock, size: 20),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.all(10),
-                  color: Colors.white,
-                  child: TextField(
-                    controller: usernameController,
-                    decoration: InputDecoration(
-                      hintText: "Nombre de usuario",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      prefixIcon: Icon(Icons.person, size: 20),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.all(10),
-                  color: Colors.white,
-                  child: TextField(
-                    controller: ageController,
-                    //keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      hintText: "Fecha de nacimiento",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      prefixIcon: Icon(Icons.numbers, size: 20),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.all(10),
-                  color: Colors.white,
-                  child: TextField(
-                    controller: numberController,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      hintText: "Numero",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      prefixIcon: Icon(Icons.numbers, size: 20),
-                    ),
-                  ),
-                ),
+                _buildTextField(emailController, "Correo", Icons.email),
+                _buildTextField(confirmEmailController, "Confirmar correo", Icons.email),
+                _buildTextField(passwordController, "Contraseña", Icons.lock, obscureText: true),
+                _buildTextField(confirmPasswordController, "Confirmar contraseña", Icons.lock, obscureText: true),
+                _buildTextField(usernameController, "Nombre de usuario", Icons.person),
+                _buildTextField(ageController, "Fecha de nacimiento", Icons.cake),
+                _buildTextField(numberController, "Numero", Icons.phone, keyboardType: TextInputType.number),
                 Container(
                   margin: EdgeInsets.all(10),
                   child: ElevatedButton(
@@ -128,12 +118,7 @@ class _RegisterStateBD extends State<RegisterBD> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          "Completar",
-                          style: TextStyle(
-                            color: Color(0xFF040C52),
-                          ),
-                        ),
+                        Text("Completar", style: TextStyle(color: Color(0xFF040C52))),
                       ],
                     ),
                     style: ElevatedButton.styleFrom(
@@ -144,28 +129,16 @@ class _RegisterStateBD extends State<RegisterBD> {
                     ),
                   ),
                 ),
-                /*Container(
+                Container(
                   margin: EdgeInsets.all(10),
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                          builder: (BuildContext context) {
-                            return login();
-                          },
-                        ),
-                            (Route<dynamic> route) => false, // Esta es la condición que faltaba para la función pushAndRemoveUntil
-                      );
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => loginBD()));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          "¿Ya tienes cuenta? Inicia sesión",
-                          style: TextStyle(
-                            color: Color(0xFF040C52),
-                          ),
-                        ),
+                        Text("¿Ya tienes cuenta? Inicia sesión", style: TextStyle(color: Color(0xFF040C52))),
                       ],
                     ),
                     style: ElevatedButton.styleFrom(
@@ -175,8 +148,7 @@ class _RegisterStateBD extends State<RegisterBD> {
                       ),
                     ),
                   ),
-                ),*/
-
+                ),
               ],
             ),
           ),
@@ -184,4 +156,22 @@ class _RegisterStateBD extends State<RegisterBD> {
       ),
     );
   }
+
+  Widget _buildTextField(TextEditingController controller, String hintText, IconData icon, {bool obscureText = false, TextInputType keyboardType = TextInputType.text}) {
+    return Container(
+      margin: EdgeInsets.all(10),
+      color: Colors.white,
+      child: TextField(
+        controller: controller,
+        obscureText: obscureText,
+        keyboardType: keyboardType,
+        decoration: InputDecoration(
+          hintText: hintText,
+          hintStyle: TextStyle(color: Colors.grey),
+          prefixIcon: Icon(icon, size: 20),
+        ),
+      ),
+    );
+  }
 }
+

@@ -1,6 +1,6 @@
 import 'dart:convert';
-
-import 'package:app_aulagramma/register.dart';
+import 'package:app_aulagramma/Productos.dart';
+import 'package:app_aulagramma/registerBD.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as https;
 
@@ -15,41 +15,55 @@ class _loginBDState extends State<loginBD> {
   final TextEditingController correoController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-
   String correo = "";
   String pass = "";
 
-  void complete(){
+  void complete() {
     correo = correoController.text;
     pass = passwordController.text;
     login();
   }
-  Future<void> login() async{
+
+  void page(){
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Productos(),
+      ),
+    );
+  }
+
+  Future<void> login() async {
     var url = Uri.https('api.aulagrammae.com', 'apps/login.php');
-    var response = await https.post(url, body:{
+    var response = await https.post(url, body: {
       'Correo': correo,
       'Password': pass,
     });
-    print('Respuesta: ' + response.body);
-
-    var datos = jsonDecode(response.body);
-    if (datos['Respuesta'] == '1'){
-      //dar acceso a mi plataforma
-      //guardarSesion(); guardar sharedPreferences
-    }
-    else{
-      print(datos["Respuesta"]);
+    print('Respuesta completa: ${response.body}');
+    try {
+      var datos = jsonDecode(response.body);
+      if (datos['respuesta'] == "1") {
+        page();
+      } else {
+        print('Error en la respuesta: ${datos["respuesta"]}');
+      }
+    } catch (e) {
+      print('Error al parsear JSON: $e');
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text("Login", style: TextStyle(
-          color:Color(0xFF040F51),
-        ),),
+        title: Text(
+          "Login",
+          style: TextStyle(
+            color: Color(0xFF040F51),
+          ),
+        ),
       ),
       backgroundColor: Color(0xFF040F51),
       body: GestureDetector(
@@ -131,7 +145,7 @@ class _loginBDState extends State<loginBD> {
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (BuildContext context) {
-                            return Register();
+                            return RegisterBD();
                           },
                         ));
                       },
@@ -156,19 +170,10 @@ class _loginBDState extends State<loginBD> {
                 ],
               ),
             ),
-            Container(
-              alignment: Alignment.center,
-              child: Text(
-                "Volver",
-                style: TextStyle(
-                  color: Colors.blue[50],
-                ),
-              ),
-            ),
           ],
         ),
       ),
     );
   }
-  }
+}
 

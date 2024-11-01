@@ -1,4 +1,5 @@
-import 'package:app_aulagramma/login.dart';
+
+import 'package:app_aulagramma/loginBD.dart';
 import 'package:flutter/material.dart';
 import 'package:app_aulagramma/tienda.dart';
 import 'package:app_aulagramma/modificarPerfil.dart';
@@ -240,7 +241,7 @@ class _PerfilState extends State<Perfil> {
                 _clearUserData();
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
-                    builder: (BuildContext context) => login(),
+                    builder: (BuildContext context) => loginBD(),
                   ),
                 );
               }),
