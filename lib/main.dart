@@ -19,7 +19,7 @@ class app extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true
       ),
-      home: Productos(),
+      home: loginBD(),
     );
   }
 }

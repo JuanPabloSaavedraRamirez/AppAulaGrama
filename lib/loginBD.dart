@@ -47,7 +47,7 @@ class _loginBDState extends State<loginBD> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text("LoginBD", style: TextStyle(
+        title: Text("Login", style: TextStyle(
           color:Color(0xFF040F51),
         ),),
       ),
