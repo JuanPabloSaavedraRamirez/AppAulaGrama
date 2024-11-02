@@ -205,11 +205,23 @@ class _perfilBDState extends State<perfilBD> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: (){
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => modPerfilBD()),
-                );
+              onPressed: () {
+                // Verifica que hay datos disponibles y selecciona el índice correcto
+                if (datos.isNotEmpty) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => modPerfilBD(
+                        datos[0].id,
+                        datos[0].user,
+                        datos[0].correo,
+                        datos[0].password,
+                        datos[0].numTelefonico,
+                        datos[0].FechaNacimiento,
+                      ),
+                    ),
+                  );
+                }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF040F51),
@@ -218,10 +230,12 @@ class _perfilBDState extends State<perfilBD> {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              child: Text('modificar perfil',
+              child: Text(
+                'Modificar perfil',
                 style: TextStyle(fontSize: 18, color: Colors.white),
               ),
             ),
+
             SizedBox(height: 10,),
             ElevatedButton(
               onPressed: _logout,
