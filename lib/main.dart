@@ -1,5 +1,6 @@
 import 'package:app_aulagramma/Productos.dart';
 import 'package:app_aulagramma/loginBD.dart';
+import 'package:app_aulagramma/perfilBD.dart';
 import 'package:app_aulagramma/registerBD.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,7 @@ class app extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true
       ),
-      home: RegisterBD(),
+      home: perfilBD(),
     );
   }
 }
