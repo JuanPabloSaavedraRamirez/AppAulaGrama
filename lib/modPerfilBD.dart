@@ -1,6 +1,5 @@
 import 'package:app_aulagramma/perfilBD.dart';
 import 'package:flutter/material.dart';
-import 'package:app_aulagramma/perfil.dart';
 
 class modPerfilBD extends StatefulWidget {
 

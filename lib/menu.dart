@@ -1,6 +1,8 @@
 import 'package:app_aulagramma/blog.dart';
+import 'package:app_aulagramma/comprarProductos.dart';
 import 'package:app_aulagramma/home.dart';
 import 'package:app_aulagramma/perfil.dart';
+import 'package:app_aulagramma/perfilBD.dart';
 import 'package:app_aulagramma/tienda.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -77,9 +79,7 @@ class _MenuState extends State<Menu> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "Aula Gramma",
-                    style: TextStyle(
+                  Text("Aula Gramma", style: TextStyle(
                       color: Color(0xFFD0DBF3),
                     ),
                   ),
@@ -100,12 +100,7 @@ class _MenuState extends State<Menu> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (BuildContext context) {
-                      return Perfil(
-                        username: username,
-                        email: email,
-                        age: age,
-                        number: number,
-                      );
+                      return perfilBD();
                     },
                   ),
                 );
@@ -136,7 +131,7 @@ class _MenuState extends State<Menu> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (BuildContext context) {
-                      return tienda();
+                      return ComprarProductos();
                     },
                   ),
                 );
