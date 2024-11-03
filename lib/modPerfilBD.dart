@@ -1,65 +1,46 @@
+import 'package:app_aulagramma/perfilBD.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as https;
+import 'package:app_aulagramma/perfil.dart';
 
 class modPerfilBD extends StatefulWidget {
-  String? id;
-  String? user;
-  String? correo;
-  String? password;
-  String? numTelefonico;
-  String? FechaNacimiento;
-  modPerfilBD(this.id, this.user,this.correo, this.password,
-      this.numTelefonico, this.FechaNacimiento, {super.key});
 
   @override
   State<modPerfilBD> createState() => _modPerfilBDState();
 }
 
 class _modPerfilBDState extends State<modPerfilBD> {
-
-  final TextEditingController nameProductController = TextEditingController();
-  final TextEditingController descProductController = TextEditingController();
-  final TextEditingController priceProductController = TextEditingController();
-
-  String nameP = "";
-  String desP = "";
-  String priceP = "";
-  String idP = "";
-
-  void complete(){
-    nameP = nameProductController.text;
-    desP = descProductController.text;
-    priceP = priceProductController.text;
-    modificar();
-  }
-
-  Future<void> modificar() async{
-    var url = Uri.https('api.aulagrammae.com', 'apps/mod_product.php');
-    var response = await https.post(url, body:{
-      'nombre': nameP,
-      'descripcion': desP,
-      'precio': priceP,
-      'id': widget.id,
-    });
-    print('Respuesta: ' + response.body);
-
-    if (response.body == "1"){
-      Navigator.of(context).pop();
-    }else{
-      print(response.body);
-    }
-    //Navigator.of(context).pop();
-  }
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController confirmEmailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController ageController = TextEditingController();
+  final TextEditingController numberController = TextEditingController();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    setState(() {
-      //nameProductController.text = widget.nombre!;
-      //descProductController.text = widget.descripcion!;
-      //priceProductController.text = widget.precio!;
-    });
+  }
+
+  bool _validateEmails() {
+    return emailController.text == confirmEmailController.text;
+  }
+
+  bool _validatePasswords() {
+    return passwordController.text == confirmPasswordController.text;
+  }
+
+  bool _validateFields() {
+    if (emailController.text.isEmpty ||
+        confirmEmailController.text.isEmpty ||
+        passwordController.text.isEmpty ||
+        confirmPasswordController.text.isEmpty ||
+        usernameController.text.isEmpty ||
+        ageController.text.isEmpty ||
+        numberController.text.isEmpty) {
+      return false;
+    }
+    return true;
   }
 
   @override
@@ -68,11 +49,10 @@ class _modPerfilBDState extends State<modPerfilBD> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text("Modificar perfil", style: TextStyle(
-          //color: Color(0xFF040F51)
+            color: Color(0xFF040F51)
         ),),
       ),
       backgroundColor: Color(0xFF040C52),
-      //backgroundColor: Color(0xFF040C52),
       body: ListView(
         children: [
           Container(
@@ -83,11 +63,11 @@ class _modPerfilBDState extends State<modPerfilBD> {
                   margin: EdgeInsets.all(10),
                   color: Colors.white,
                   child: TextField(
-                    controller: nameProductController,
+                    controller: emailController,
                     decoration: InputDecoration(
-                      hintText: "Nombre",
+                      hintText: "Nuevo Correo",
                       hintStyle: TextStyle(color: Colors.grey),
-                      prefixIcon: Icon(Icons.bookmark_add, size: 20),
+                      prefixIcon: Icon(Icons.person, size: 20),
                     ),
                   ),
                 ),
@@ -95,11 +75,11 @@ class _modPerfilBDState extends State<modPerfilBD> {
                   margin: EdgeInsets.all(10),
                   color: Colors.white,
                   child: TextField(
-                    controller: descProductController,
+                    controller: confirmEmailController,
                     decoration: InputDecoration(
-                      hintText: "Descripcion",
+                      hintText: "Confirmar nuevo correo",
                       hintStyle: TextStyle(color: Colors.grey),
-                      prefixIcon: Icon(Icons.book, size: 20),
+                      prefixIcon: Icon(Icons.person, size: 20),
                     ),
                   ),
                 ),
@@ -107,27 +87,96 @@ class _modPerfilBDState extends State<modPerfilBD> {
                   margin: EdgeInsets.all(10),
                   color: Colors.white,
                   child: TextField(
-                    controller: priceProductController,
+                    controller: passwordController,
+                    obscureText: true,
                     decoration: InputDecoration(
-                      hintText: "Precio",
+                      hintText: "Nueva contraseña",
                       hintStyle: TextStyle(color: Colors.grey),
-                      prefixIcon: Icon(Icons.price_change_outlined, size: 20),
+                      prefixIcon: Icon(Icons.password, size: 20),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.all(10),
+                  color: Colors.white,
+                  child: TextField(
+                    controller: confirmPasswordController,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      hintText: "Confirmar nueva contraseña",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      prefixIcon: Icon(Icons.password, size: 20),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.all(10),
+                  color: Colors.white,
+                  child: TextField(
+                    controller: usernameController,
+                    decoration: InputDecoration(
+                      hintText: "Nuevo Nombre de usuario",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      prefixIcon: Icon(Icons.person, size: 20),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.all(10),
+                  color: Colors.white,
+                  child: TextField(
+                    controller: ageController,
+                    decoration: InputDecoration(
+                      hintText: "Fecha de nacimiento",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      prefixIcon: Icon(Icons.numbers, size: 20),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.all(10),
+                  color: Colors.white,
+                  child: TextField(
+                    controller: numberController,
+                    decoration: InputDecoration(
+                      hintText: "Nuevo numero",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      prefixIcon: Icon(Icons.numbers, size: 20),
                     ),
                   ),
                 ),
                 Container(
                   margin: EdgeInsets.all(10),
                   child: ElevatedButton(
-                    onPressed: complete,
+                    onPressed: () {
+                      if (!_validateFields()) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Debes llenar todos los campos"),
+                              backgroundColor: Colors.red,));
+                      } else if (!_validateEmails()) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Los correos no coinciden. Por favor, verifica tus datos."),
+                              backgroundColor: Colors.red,));
+                      } else if (!_validatePasswords()) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text("Las contraseñas no coinciden. Por favor, verifica tus datos."),
+                              backgroundColor: Colors.red,));
+                      } else {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) {
+                              return perfilBD();
+                            },
+                          ),
+                        );
+                      }
+                    },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          "Completar",
-                          style: TextStyle(
+                        Text("Confirmar", style: TextStyle(
                             color: Color(0xFF040C52),
-                          ),
-                        ),
+                          ),),
                       ],
                     ),
                     style: ElevatedButton.styleFrom(
