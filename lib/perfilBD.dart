@@ -22,6 +22,9 @@ class _perfilBDState extends State<perfilBD> {
   final ImagePicker _picker = ImagePicker();
 
   Future<List<datos_perfil>> tomar_datos() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? userId = prefs.getString('IDUser');
+
     var url = Uri.https('api.aulagrammae.com', 'apps/ver_perfil.php');
     var response = await https.post(url).timeout(Duration(seconds: 90));
     print(response.body);
@@ -30,7 +33,8 @@ class _perfilBDState extends State<perfilBD> {
 
     for (var datos in datosJson) {
       var perfilUsuario = datos_perfil.fromJson(datos);
-      if (perfilUsuario.id == "1") {
+
+      if (perfilUsuario.id == userId) {
         perfil.add(perfilUsuario);
         break;
       }
@@ -38,6 +42,7 @@ class _perfilBDState extends State<perfilBD> {
 
     return perfil;
   }
+
 
   Future<void> _pickImage(ImageSource source) async {
     final pickedFile = await _picker.pickImage(source: source);
