@@ -95,7 +95,7 @@ class _RegisterStateBD extends State<RegisterBD> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text("Registrate", style: TextStyle(color: Color(0xFF040F51))),
+        title: Text("Registrate BD", style: TextStyle(color: Color(0xFF040F51))),
       ),
       backgroundColor: Color(0xFF040C52),
       body: ListView(

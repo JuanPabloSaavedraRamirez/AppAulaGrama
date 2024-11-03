@@ -95,7 +95,7 @@ class _loginBDState extends State<loginBD> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
-          "Login",
+          "Login BD",
           style: TextStyle(
             color: Color(0xFF040F51),
           ),

@@ -74,12 +74,14 @@
     Future<void> _logout() async {
       final prefs = await SharedPreferences.getInstance();
       await prefs.remove('profile_image');
-      await prefs.remove('IDUser'); // Elimina también el IDUser
-      Navigator.pushReplacement(
-        context,
+      await prefs.remove('IDUser');
+
+      Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => loginBD()),
+            (Route<dynamic> route) => false,
       );
     }
+
 
 
     @override

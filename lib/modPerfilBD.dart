@@ -47,7 +47,7 @@ class _modPerfilBDState extends State<modPerfilBD> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text("Modificar perfil", style: TextStyle(
+        title: Text("Modificar perfil BD", style: TextStyle(
             color: Color(0xFF040F51)
         ),),
       ),
