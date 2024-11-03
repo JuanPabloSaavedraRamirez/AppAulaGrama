@@ -1,8 +1,10 @@
+import 'dart:convert';
 import 'package:app_aulagramma/blog.dart';
 import 'package:app_aulagramma/comprarProductos.dart';
 import 'package:app_aulagramma/home.dart';
 import 'package:app_aulagramma/perfilBD.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as https;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Menu extends StatefulWidget {
@@ -28,26 +30,32 @@ class _MenuState extends State<Menu> {
   Future<void> obtenerDatos() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    String regUsername = prefs.getString('username') ?? '';
-    String regEmail = prefs.getString('email') ?? '';
-    String regAge = prefs.getString('age') ?? '';
-    String regNumber = prefs.getString('number') ?? '';
+    String userId = prefs.getString('IDUser') ?? '';
 
-    // Obtener la ID del usuario
-    String regUserId = prefs.getString('IDUser') ?? ''; // Asegúrate de que 'userId' es el campo correcto
+    if (userId.isNotEmpty) {
+      var url = Uri.https('api.aulagrammae.com', 'apps/ver_perfil.php');
+      var response = await https.post(url, body: {'userId': userId});
 
-    String loginUsername = prefs.getString('loginUsername') ?? '';
-    String loginEmail = prefs.getString('loginEmail') ?? '';
-    String loginAge = prefs.getString('loginAge') ?? '';
-    String loginNumber = prefs.getString('loginNumber') ?? '';
+      if (response.statusCode == 200) {
+        var datosJson = jsonDecode(response.body) as List;
 
-    setState(() {
-      username = regUsername.isNotEmpty ? regUsername : loginUsername;
-      email = regEmail.isNotEmpty ? regEmail : loginEmail;
-      age = regAge.isNotEmpty ? regAge : loginAge;
-      number = regNumber.isNotEmpty ? regNumber : loginNumber;
-      IDUser = regUserId;
-    });
+        for (var datos in datosJson) {
+          if (datos['id'] == userId) {
+            setState(() {
+              username = datos['user'] ?? '';
+              email = datos['correo'] ?? '';
+              age = datos['age'] ?? '';
+              number = datos['numTelefonico'] ?? '';
+            });
+            break;
+          }
+        }
+      } else {
+        print('Error en la obtención de datos del usuario: ${response.statusCode}');
+      }
+    } else {
+      print('ID de usuario no encontrado.');
+    }
   }
 
   @override
@@ -69,15 +77,6 @@ class _MenuState extends State<Menu> {
           ),
           Container(
             margin: EdgeInsets.all(10),
-            child: Text(
-              "ID de Usuario: $IDUser", // Mostrar la ID del usuario aquí
-              style: TextStyle(
-                color: Color(0xFFD0DBF3),
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.all(10),
             child: ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
@@ -93,8 +92,7 @@ class _MenuState extends State<Menu> {
                 children: [
                   Text("Aula Gramma", style: TextStyle(
                     color: Color(0xFFD0DBF3),
-                  ),
-                  ),
+                  )),
                 ],
               ),
               style: ElevatedButton.styleFrom(
