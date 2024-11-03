@@ -220,13 +220,12 @@
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => modPerfilBD(/*
-                          datos[0].id,
-                          datos[0].user,
+                        builder: (context) => modPerfilBD(
                           datos[0].correo,
+                          datos[0].user,
                           datos[0].password,
                           datos[0].numTelefonico,
-                          datos[0].FechaNacimiento,*/
+                          datos[0].FechaNacimiento,
                         ),
                       ),
                     );
