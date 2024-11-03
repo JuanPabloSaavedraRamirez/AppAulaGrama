@@ -19,6 +19,23 @@ class _loginBDState extends State<loginBD> {
   String correo = "";
   String pass = "";
 
+  @override
+  void initState() {
+    super.initState();
+    checkLoginStatus();
+  }
+
+  // Verificar si el usuario ya ha iniciado sesión previamente
+  Future<void> checkLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userID = prefs.getString('IDUser');
+
+    if (userID != null) {
+      // Si el IDUser ya está guardado, redirigir a la pantalla ComprarProductos
+      page();
+    }
+  }
+
   void complete() {
     correo = correoController.text;
     pass = passwordController.text;
@@ -47,7 +64,6 @@ class _loginBDState extends State<loginBD> {
       if (datos['respuesta'] == "1") {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('IDUser', datos['IDUser']);
-
         page();
       } else {
         showDialog(
@@ -55,7 +71,7 @@ class _loginBDState extends State<loginBD> {
           builder: (BuildContext context) {
             return AlertDialog(
               title: Text("Usuario no encontrado"),
-              content: Text("El correo ingresado no existe o la contraseña esta mal escrita."),
+              content: Text("El correo ingresado no existe o la contraseña está mal escrita."),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -72,7 +88,6 @@ class _loginBDState extends State<loginBD> {
       print('Error al parsear JSON: $e');
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
