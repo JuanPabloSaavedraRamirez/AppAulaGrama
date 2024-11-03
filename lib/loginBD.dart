@@ -131,7 +131,7 @@ class _loginBDState extends State<loginBD> {
                     child: TextField(
                       controller: correoController,
                       decoration: InputDecoration(
-                        hintText: "Usuario",
+                        hintText: "Correo",
                         hintStyle: TextStyle(color: Colors.grey),
                         prefixIcon: Icon(Icons.person, size: 20),
                       ),

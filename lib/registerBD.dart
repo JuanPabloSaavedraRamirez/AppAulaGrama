@@ -1,6 +1,9 @@
+import 'package:app_aulagramma/comprarProductos.dart';
 import 'package:app_aulagramma/loginBD.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as https;
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class RegisterBD extends StatefulWidget {
   const RegisterBD({super.key});
@@ -88,6 +91,12 @@ class _RegisterStateBD extends State<RegisterBD> {
       'Numero': number,
     });
     print('Respuesta: ' + response.body);
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ComprarProductos(),
+      ),
+    );
   }
 
   @override
