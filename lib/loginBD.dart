@@ -1,8 +1,9 @@
 import 'dart:convert';
-import 'package:app_aulagramma/Productos.dart';
+import 'package:app_aulagramma/comprarProductos.dart';
 import 'package:app_aulagramma/registerBD.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as https;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class loginBD extends StatefulWidget {
   const loginBD({super.key});
@@ -24,11 +25,11 @@ class _loginBDState extends State<loginBD> {
     login();
   }
 
-  void page(){
+  void page() {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => Productos(),
+        builder: (context) => ComprarProductos(),
       ),
     );
   }
@@ -40,12 +41,32 @@ class _loginBDState extends State<loginBD> {
       'Password': pass,
     });
     print('Respuesta completa: ${response.body}');
+
     try {
       var datos = jsonDecode(response.body);
       if (datos['respuesta'] == "1") {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('IDUser', datos['IDUser']);
+
         page();
       } else {
-        print('Error en la respuesta: ${datos["respuesta"]}');
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Usuario no encontrado"),
+              content: Text("El correo ingresado no existe o la contraseña esta mal escrita."),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text("Aceptar"),
+                ),
+              ],
+            );
+          },
+        );
       }
     } catch (e) {
       print('Error al parsear JSON: $e');
@@ -176,4 +197,3 @@ class _loginBDState extends State<loginBD> {
     );
   }
 }
-

@@ -1,9 +1,7 @@
 import 'package:app_aulagramma/blog.dart';
 import 'package:app_aulagramma/comprarProductos.dart';
 import 'package:app_aulagramma/home.dart';
-import 'package:app_aulagramma/perfil.dart';
 import 'package:app_aulagramma/perfilBD.dart';
-import 'package:app_aulagramma/tienda.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -19,6 +17,7 @@ class _MenuState extends State<Menu> {
   String email = '';
   String age = '';
   String number = '';
+  String IDUser = '';
 
   @override
   void initState() {
@@ -34,6 +33,9 @@ class _MenuState extends State<Menu> {
     String regAge = prefs.getString('age') ?? '';
     String regNumber = prefs.getString('number') ?? '';
 
+    // Obtener la ID del usuario
+    String regUserId = prefs.getString('IDUser') ?? ''; // Asegúrate de que 'userId' es el campo correcto
+
     String loginUsername = prefs.getString('loginUsername') ?? '';
     String loginEmail = prefs.getString('loginEmail') ?? '';
     String loginAge = prefs.getString('loginAge') ?? '';
@@ -44,6 +46,7 @@ class _MenuState extends State<Menu> {
       email = regEmail.isNotEmpty ? regEmail : loginEmail;
       age = regAge.isNotEmpty ? regAge : loginAge;
       number = regNumber.isNotEmpty ? regNumber : loginNumber;
+      IDUser = regUserId;
     });
   }
 
@@ -55,13 +58,22 @@ class _MenuState extends State<Menu> {
           UserAccountsDrawerHeader(
             accountName: Text(username.isNotEmpty ? username : "Usuario", style: TextStyle(
               color: Color(0xFFD0DBF3),
-            ),),
+            )),
             accountEmail: Text(email.isNotEmpty ? email : "email@example.com", style: TextStyle(
-              color: Color(0xFFD0DBF3)
-            ),),
+              color: Color(0xFFD0DBF3),
+            )),
             currentAccountPicture: Image.asset("Imagenes/LogoAulagramma.jpeg"),
             decoration: BoxDecoration(
               color: Color(0xFF040C52),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(10),
+            child: Text(
+              "ID de Usuario: $IDUser", // Mostrar la ID del usuario aquí
+              style: TextStyle(
+                color: Color(0xFFD0DBF3),
+              ),
             ),
           ),
           Container(
@@ -80,8 +92,8 @@ class _MenuState extends State<Menu> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("Aula Gramma", style: TextStyle(
-                      color: Color(0xFFD0DBF3),
-                    ),
+                    color: Color(0xFFD0DBF3),
+                  ),
                   ),
                 ],
               ),
@@ -188,7 +200,6 @@ class _MenuState extends State<Menu> {
           ),
         ],
       ),
-
     );
   }
 }
