@@ -39,7 +39,6 @@ class _RegisterStateBD extends State<RegisterBD> {
   }
 
   bool _verifyFields() {
-    // Verificar campos vacíos
     if (usernameController.text.isEmpty ||
         emailController.text.isEmpty ||
         confirmEmailController.text.isEmpty ||
@@ -116,7 +115,7 @@ class _RegisterStateBD extends State<RegisterBD> {
                 _buildTextField(passwordController, "Contraseña", Icons.lock, obscureText: true),
                 _buildTextField(confirmPasswordController, "Confirmar contraseña", Icons.lock, obscureText: true),
                 _buildTextField(usernameController, "Nombre de usuario", Icons.person),
-                _buildTextField(ageController, "Fecha de nacimiento", Icons.cake),
+                _buildTextField(ageController, "Fecha de nacimiento (YYYY/MM/DD)", Icons.cake),
                 _buildTextField(numberController, "Numero", Icons.phone, keyboardType: TextInputType.number),
                 Container(
                   margin: EdgeInsets.all(10),

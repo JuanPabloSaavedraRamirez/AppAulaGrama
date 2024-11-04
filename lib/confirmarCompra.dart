@@ -1,6 +1,5 @@
 import 'dart:convert';
-import 'package:app_aulagramma/Productos.dart';
-import 'package:app_aulagramma/registerBD.dart';
+import 'package:app_aulagramma/comprarProductos.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as https;
 
@@ -12,40 +11,35 @@ class confirmarCompra extends StatefulWidget {
 }
 
 class _confirmarCompraState extends State<confirmarCompra> {
-  final TextEditingController correoController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController numTarjetaController = TextEditingController();
+  final TextEditingController cvcController = TextEditingController();
+  final TextEditingController fechaCaController = TextEditingController();
 
-  String correo = "";
-  String pass = "";
+  String numTar = "";
+  String cvc = "";
+  String fechaCa = "";
 
   void complete() {
-    correo = correoController.text;
-    pass = passwordController.text;
-    login();
+    numTar = numTarjetaController.text;
+    cvc = cvcController.text;
+    fechaCa = fechaCaController.text;
+    tarjeta();
   }
 
-  void page(){
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => Productos(),
-      ),
-    );
-  }
-
-  Future<void> login() async {
-    var url = Uri.https('api.aulagrammae.com', 'apps/login.php');
+  Future<void> tarjeta() async {
+    var url = Uri.https('api.aulagrammae.com', 'apps/addTarjeta.php');
     var response = await https.post(url, body: {
-      'Correo': correo,
-      'Password': pass,
+      'numTarjeta': numTar,
+      'cvc': cvc,
+      'caducidad': fechaCa,
     });
-    print('Respuesta completa: ${response.body}');
+
     try {
       var datos = jsonDecode(response.body);
       if (datos['respuesta'] == "1") {
-        page();
+        print("Tarjeta registrada exitosamente.");
       } else {
-        print('Error en la respuesta: ${datos["respuesta"]}');
+        print('Error: ${datos["mensaje"]}');
       }
     } catch (e) {
       print('Error al parsear JSON: $e');
@@ -53,12 +47,13 @@ class _confirmarCompraState extends State<confirmarCompra> {
   }
 
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text("confirmar compra", style: TextStyle(
+        title: Text("Confirmar compra", style: TextStyle(
             color: Color(0xFF040F51),
           ),
         ),
@@ -89,7 +84,7 @@ class _confirmarCompraState extends State<confirmarCompra> {
                     margin: EdgeInsets.all(10),
                     color: Colors.white,
                     child: TextField(
-                      controller: correoController,
+                      controller: numTarjetaController,
                       decoration: InputDecoration(
                         hintText: "Numero de tarjeta",
                         hintStyle: TextStyle(color: Colors.grey),
@@ -101,7 +96,7 @@ class _confirmarCompraState extends State<confirmarCompra> {
                     margin: EdgeInsets.all(10),
                     color: Colors.white,
                     child: TextField(
-                      controller: passwordController,
+                      controller: cvcController,
                       obscureText: true,
                       decoration: InputDecoration(
                         hintText: "CVC",
@@ -114,10 +109,9 @@ class _confirmarCompraState extends State<confirmarCompra> {
                     margin: EdgeInsets.all(10),
                     color: Colors.white,
                     child: TextField(
-                      controller: passwordController,
-                      obscureText: true,
+                      controller: fechaCaController,
                       decoration: InputDecoration(
-                        hintText: "Fecha de caducidad",
+                        hintText: "Fecha de caducidad (MM/DD)",
                         hintStyle: TextStyle(color: Colors.grey),
                         prefixIcon: Icon(Icons.lock, size: 20),
                       ),
@@ -130,9 +124,8 @@ class _confirmarCompraState extends State<confirmarCompra> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            "confirmar",
-                            style: TextStyle(color: Color(0xFF040C52)),
+                          Text("Confirmar compra", style: TextStyle(
+                              color: Color(0xFF040C52)),
                           ),
                         ],
                       ),
@@ -148,11 +141,12 @@ class _confirmarCompraState extends State<confirmarCompra> {
                     margin: EdgeInsets.all(10),
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (BuildContext context) {
-                            return RegisterBD();
-                          },
-                        ));
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ComprarProductos(),
+                          ),
+                        );
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
