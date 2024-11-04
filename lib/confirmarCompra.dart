@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:app_aulagramma/comprarProductos.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as https;
@@ -33,20 +32,13 @@ class _confirmarCompraState extends State<confirmarCompra> {
       'CVC': CVC,
       'FechaCaducidad': FechaCaducidad,
     });
-
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
-
-    try {
-      var datos = jsonDecode(response.body);
-      if (datos['respuesta'] == "1") {
-        print("Tarjeta registrada exitosamente.");
-      } else {
-        print('Error: ${datos["mensaje"]}');
-      }
-    } catch (e) {
-      print('Error al parsear JSON: $e');
-    }
+    print('Respuesta: ' + response.body);
+    /*Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ComprarProductos(),
+      ),
+    );*/
   }
 
 

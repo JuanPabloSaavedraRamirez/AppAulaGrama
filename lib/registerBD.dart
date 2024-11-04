@@ -87,6 +87,8 @@ class _RegisterStateBD extends State<RegisterBD> {
       'FechaDeNacimiento': date,
       'Numero': number,
     });
+
+    print(date);
     print('Respuesta: ' + response.body);
     Navigator.pushReplacement(
       context,
