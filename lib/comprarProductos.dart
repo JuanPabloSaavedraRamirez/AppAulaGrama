@@ -48,10 +48,8 @@ class _ComprarProductosState extends State<ComprarProductos> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Cursos",
-          style: TextStyle(color: Colors.white),
-        ),
+        title: Text("Cursos", style: TextStyle(
+            color: Colors.white),),
         backgroundColor: Color(0xFF040C52),
       ),
       endDrawer: Menu(),

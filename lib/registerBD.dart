@@ -3,6 +3,7 @@ import 'package:app_aulagramma/loginBD.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as https;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 
 class RegisterBD extends StatefulWidget {
@@ -26,6 +27,7 @@ class _RegisterStateBD extends State<RegisterBD> {
   String pass = "";
   String date = "";
   String number = "";
+  //String? id ="";
 
   void complete() {
     if (_verifyFields()) {
@@ -87,15 +89,41 @@ class _RegisterStateBD extends State<RegisterBD> {
       'FechaDeNacimiento': date,
       'Numero': number,
     });
-
-    print(date);
     print('Respuesta: ' + response.body);
-    Navigator.pushReplacement(
+    var datos = jsonDecode(response.body);
+    datos[0].toString();
+    print('datos' + datos.toString());
+    String? id = datos['id'].toString();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('IDUser', id);
+    Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(
         builder: (context) => ComprarProductos(),
       ),
+          (Route<dynamic> route) => false,
     );
+
+
+  }
+  @override
+  void initState() {
+    super.initState();
+    checkLoginStatus();
+  }
+
+  Future<void> checkLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userID = prefs.getString('IDUser');
+
+    if (userID != null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ComprarProductos(),
+        ),
+      );
+    }
   }
 
   @override

@@ -147,10 +147,8 @@ class _confirmarCompraState extends State<confirmarCompra> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            "Cancelar",
-                            style: TextStyle(color: Color(0xFF040C52)),
-                          ),
+                          Text("Cancelar", style: TextStyle(
+                              color: Color(0xFF040C52)),),
                         ],
                       ),
                       style: ElevatedButton.styleFrom(

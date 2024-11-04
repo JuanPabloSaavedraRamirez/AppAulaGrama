@@ -113,8 +113,7 @@ class _loginBDState extends State<loginBD> {
               child: Column(
                 children: [
                   Padding(padding: EdgeInsets.all(20)),
-                  Text(
-                    "Bienvenido",
+                  Text("Bienvenido",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Color(0xFFD0DBF3),
@@ -153,9 +152,7 @@ class _loginBDState extends State<loginBD> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            "Login",
-                            style: TextStyle(color: Color(0xFF040C52)),
+                          Text("Login", style: TextStyle(color: Color(0xFF040C52)),
                           ),
                         ],
                       ),
@@ -167,8 +164,7 @@ class _loginBDState extends State<loginBD> {
                       ),
                     ),
                   ),
-                  Text(
-                    "¿Perdiste tu contraseña?",
+                  Text("¿Perdiste tu contraseña?",
                     style: TextStyle(color: Colors.blue[50]),
                   ),
                   Container(
@@ -184,8 +180,7 @@ class _loginBDState extends State<loginBD> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            "¿No tienes cuenta? Regístrate",
+                          Text("¿No tienes cuenta? Regístrate",
                             style: TextStyle(color: Color(0xFF040C52)),
                           ),
                         ],
