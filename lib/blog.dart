@@ -1,5 +1,6 @@
 import 'package:app_aulagramma/menu.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Blog extends StatefulWidget {
   final String username;
@@ -13,6 +14,20 @@ class Blog extends StatefulWidget {
 class _BlogState extends State<Blog> {
   List<String> blogPosts = [];
   final TextEditingController _controller = TextEditingController();
+  String? userId;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserId();
+  }
+
+  Future<void> _loadUserId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userId = prefs.getString('IDUser');
+    });
+  }
 
   void _addPost() {
     setState(() {
@@ -38,7 +53,7 @@ class _BlogState extends State<Blog> {
       endDrawer: Menu(),
       body: Column(
         children: [
-          if (widget.username == 'JP')
+          if (userId == "2")
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(

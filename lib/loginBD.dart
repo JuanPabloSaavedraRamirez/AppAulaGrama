@@ -25,13 +25,11 @@ class _loginBDState extends State<loginBD> {
     checkLoginStatus();
   }
 
-  // Verificar si el usuario ya ha iniciado sesión previamente
   Future<void> checkLoginStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userID = prefs.getString('IDUser');
 
     if (userID != null) {
-      // Si el IDUser ya está guardado, redirigir a la pantalla ComprarProductos
       page();
     }
   }

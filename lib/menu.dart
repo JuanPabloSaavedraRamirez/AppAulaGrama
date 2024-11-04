@@ -118,9 +118,7 @@ class _MenuState extends State<Menu> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "Perfil",
-                    style: TextStyle(
+                  Text("Perfil", style: TextStyle(
                       color: Color(0xFFD0DBF3),
                     ),
                   ),
@@ -149,9 +147,7 @@ class _MenuState extends State<Menu> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "Tienda",
-                    style: TextStyle(
+                  Text("Tienda", style: TextStyle(
                       color: Color(0xFFD0DBF3),
                     ),
                   ),
@@ -180,9 +176,7 @@ class _MenuState extends State<Menu> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "Blog",
-                    style: TextStyle(
+                  Text("Blog", style: TextStyle(
                       color: Color(0xFFD0DBF3),
                     ),
                   ),
