@@ -15,24 +15,27 @@ class _confirmarCompraState extends State<confirmarCompra> {
   final TextEditingController cvcController = TextEditingController();
   final TextEditingController fechaCaController = TextEditingController();
 
-  String numTar = "";
-  String cvc = "";
-  String fechaCa = "";
+  String NumeroTarjeta = "";
+  String CVC = "";
+  String FechaCaducidad = "";
 
   void complete() {
-    numTar = numTarjetaController.text;
-    cvc = cvcController.text;
-    fechaCa = fechaCaController.text;
+    NumeroTarjeta = numTarjetaController.text;
+    CVC = cvcController.text;
+    FechaCaducidad = fechaCaController.text;
     tarjeta();
   }
 
   Future<void> tarjeta() async {
     var url = Uri.https('api.aulagrammae.com', 'apps/addTarjeta.php');
     var response = await https.post(url, body: {
-      'numTarjeta': numTar,
-      'cvc': cvc,
-      'caducidad': fechaCa,
+      'NumeroTarjeta': NumeroTarjeta,
+      'CVC': CVC,
+      'FechaCaducidad': FechaCaducidad,
     });
+
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
 
     try {
       var datos = jsonDecode(response.body);
@@ -45,6 +48,7 @@ class _confirmarCompraState extends State<confirmarCompra> {
       print('Error al parsear JSON: $e');
     }
   }
+
 
 
 
