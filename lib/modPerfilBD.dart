@@ -1,14 +1,17 @@
+import 'package:app_aulagramma/perfilBD.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as https;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class modPerfilBD extends StatefulWidget {
-  String? email;
-  String? username;
-  String? password;
-  String? age;
-  String? number;
+  String? Correo;
+  String? User;
+  String? Password;
+  String? FechaDeNacimiento;
+  String? Numero;
 
-  modPerfilBD(this.email, this.username,this.password, this.age, this.number, {super.key});
+  modPerfilBD(this.Correo, this.User,this.Password, this.FechaDeNacimiento,
+      this.Numero, {super.key});
 
   @override
   State<modPerfilBD> createState() => _modPerfilBDState();
@@ -26,13 +29,13 @@ class _modPerfilBDState extends State<modPerfilBD> {
   @override
   void initState() {
     super.initState();
-    emailController.text = widget.email ?? '';
-    confirmEmailController.text = widget.email ?? '';
-    passwordController.text = widget.password ?? '';
-    confirmPasswordController.text = widget.password ?? '';
-    usernameController.text = widget.username ?? '';
-    ageController.text = widget.age ?? '';
-    numberController.text = widget.number ?? '';
+    emailController.text = widget.Correo ?? '';
+    confirmEmailController.text = widget.Correo ?? '';
+    passwordController.text = widget.Password ?? '';
+    confirmPasswordController.text = widget.Password ?? '';
+    usernameController.text = widget.User ?? '';
+    ageController.text = widget.FechaDeNacimiento ?? '';
+    numberController.text = widget.Numero ?? '';
   }
 
   bool _validateEmails() {
@@ -54,19 +57,24 @@ class _modPerfilBDState extends State<modPerfilBD> {
   }
 
   Future<void> modificar() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? idUser = prefs.getString('IDUser');
     var url = Uri.https('api.aulagrammae.com', 'apps/mod_perfil.php');
     var response = await https.post(url, body: {
-      'email': emailController.text,
-      'username': usernameController.text,
-      'age': ageController.text,
-      'number': numberController.text,
-      'password': passwordController.text,
+      'Correo': emailController.text,
+      'User': usernameController.text,
+      'FechaDeNacimiento': ageController.text,
+      'Numero': numberController.text,
+      'Password': passwordController.text,
+      'IDUser': idUser,
     });
 
     print('Respuesta: ' + response.body);
 
     if (response.body == "1") {
-      Navigator.of(context).pop();
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => perfilBD()),
+      );
     } else {
       print(response.body);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -90,7 +98,6 @@ class _modPerfilBDState extends State<modPerfilBD> {
             margin: EdgeInsets.all(10),
             child: Column(
               children: [
-                // Campos de texto para email y demás datos
                 _buildTextField(emailController, "Nuevo Correo", Icons.person),
                 _buildTextField(confirmEmailController, "Confirmar nuevo correo", Icons.person),
                 _buildTextField(passwordController, "Nueva contraseña", Icons.password, obscureText: true),

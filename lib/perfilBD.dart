@@ -1,6 +1,7 @@
   import 'dart:convert';
   import 'dart:io';
   import 'package:app_aulagramma/datos_perfil.dart';
+import 'package:app_aulagramma/menu.dart';
   import 'package:app_aulagramma/modPerfilBD.dart';
   import 'package:flutter/material.dart';
   import 'package:http/http.dart' as https;
@@ -142,6 +143,7 @@
           backgroundColor: Color(0xFF040C52),
         ),
         backgroundColor: Color(0xFFEBF0FA),
+        endDrawer: Menu(),
         body: loading
             ? Center(
               child: CircularProgressIndicator(
@@ -215,7 +217,6 @@
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  // Verifica que hay datos disponibles y selecciona el índice correcto
                   if (datos.isNotEmpty) {
                     Navigator.pushReplacement(
                       context,
@@ -224,8 +225,8 @@
                           datos[0].correo,
                           datos[0].user,
                           datos[0].password,
-                          datos[0].numTelefonico,
                           datos[0].FechaNacimiento,
+                          datos[0].numTelefonico,
                         ),
                       ),
                     );

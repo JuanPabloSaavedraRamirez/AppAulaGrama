@@ -50,12 +50,10 @@ class _RegisterStateBD extends State<RegisterBD> {
       _showAlertDialog("Error", "Falta llenar un campo.");
       return false;
     }
-    // Verificar que los correos coincidan
     if (emailController.text != confirmEmailController.text) {
       _showAlertDialog("Error", "Los correos electrónicos no coinciden.");
       return false;
     }
-    // Verificar que las contraseñas coincidan
     if (passwordController.text != confirmPasswordController.text) {
       _showAlertDialog("Error", "Las contraseñas no coinciden.");
       return false;
