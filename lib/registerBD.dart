@@ -89,23 +89,28 @@ class _RegisterStateBD extends State<RegisterBD> {
       'FechaDeNacimiento': date,
       'Numero': number,
     });
-    print('Respuesta: ' + response.body);
+
+    print('Respuesta: ${response.body}');
     var datos = jsonDecode(response.body);
-    datos[0].toString();
-    print('datos' + datos.toString());
-    String? id = datos['id'].toString();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('IDUser', id);
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ComprarProductos(),
-      ),
-          (Route<dynamic> route) => false,
-    );
 
-
+    if (datos['status'] == 'error' && datos['message'] == 'Correo ya existe') {
+      _showAlertDialog("Error", "El correo ya está registrado. Usa otro correo.");
+    } else if (datos['status'] == 'success') {
+      String? id = datos['id'].toString();
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('IDUser', id);
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ComprarProductos(),
+        ),
+            (Route<dynamic> route) => false,
+      );
+    } else {
+      _showAlertDialog("Error", "Ocurrió un error al registrarse. Inténtalo de nuevo.");
+    }
   }
+
   @override
   void initState() {
     super.initState();
