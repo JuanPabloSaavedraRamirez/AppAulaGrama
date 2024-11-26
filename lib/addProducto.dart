@@ -1,18 +1,18 @@
-import 'package:app_aulagramma/Productos.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as https;
 import 'package:dio/dio.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:quickalert/quickalert.dart'; // Importa la biblioteca QuickAlert
 import 'dart:io';
 
-class add_producto extends StatefulWidget {
-  const add_producto({super.key});
+class AddProducto extends StatefulWidget {
+  const AddProducto({super.key});
 
   @override
-  State<add_producto> createState() => _add_productoState();
+  State<AddProducto> createState() => _AddProductoState();
 }
 
-class _add_productoState extends State<add_producto> {
+class _AddProductoState extends State<AddProducto> {
   final TextEditingController nameProductController = TextEditingController();
   final TextEditingController descProductController = TextEditingController();
   final TextEditingController priceProductController = TextEditingController();
@@ -23,17 +23,18 @@ class _add_productoState extends State<add_producto> {
 
   File? _imageFile;
   final ImagePicker _picker = ImagePicker();
+  Dio dio = Dio();
 
-  void complete(){
+  void complete() {
     nameP = nameProductController.text;
     desP = descProductController.text;
     priceP = priceProductController.text;
     addProduct();
   }
 
-  Future<void> addProduct() async{
+  Future<void> addProduct() async {
     var url = Uri.https('api.aulagrammae.com', 'apps/add_product.php');
-    var response = await https.post(url, body:{
+    var response = await https.post(url, body: {
       'nombre': nameP,
       'descripcion': desP,
       'precio': priceP,
@@ -41,7 +42,6 @@ class _add_productoState extends State<add_producto> {
     print('Respuesta: ' + response.body);
     Navigator.of(context).pop();
   }
-
 
   Future<void> _pickImage(ImageSource source) async {
     final pickedFile = await _picker.pickImage(source: source);
@@ -52,105 +52,182 @@ class _add_productoState extends State<add_producto> {
     }
   }
 
-  Dio dio = new Dio();
+  Future<void> _showImageSourceDialog() async {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Seleccionar fuente de la imagen"),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.camera_alt),
+              title: const Text("Cámara"),
+              onTap: () {
+                Navigator.of(context).pop();
+                _pickImage(ImageSource.camera);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.photo),
+              title: const Text("Galería"),
+              onTap: () {
+                Navigator.of(context).pop();
+                _pickImage(ImageSource.gallery);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
-  Future<void> subir_Imagen() async{
-    String filename = _imageFile!.path.split('/').last;
-    FormData formData = new FormData.fromMap({
-      'file' : await MultipartFile.fromFile(
-          _imageFile!.path, filename: filename
-      )
-    });
+  Future<void> subirImagen() async {
+    if (_imageFile != null) {
+      String filename = _imageFile!.path.split('/').last;
+      FormData formData = FormData.fromMap({
+        'file': await MultipartFile.fromFile(
+          _imageFile!.path,
+          filename: filename,
+        ),
+      });
 
-    await dio.post('https://api.aulagrammae.com/apps/subir_foto.php',
-        data:formData).then((respuesta){
-      if(respuesta == '1'){
-        print("Todo bien");
-      }else{
-        print(respuesta);
+      try {
+        var response = await dio.post(
+          'https://api.aulagrammae.com/apps/subir_foto.php',
+          data: formData,
+        );
+        if (response.data == '1') {
+          QuickAlert.show(
+            context: context,
+            type: QuickAlertType.success,
+            title: "¡Éxito!",
+            text: "La imagen se subió correctamente.",
+          );
+        } else {
+          QuickAlert.show(
+            context: context,
+            type: QuickAlertType.error,
+            title: "Error",
+            text: "No se pudo subir la imagen. Inténtalo de nuevo.",
+          );
+        }
+      } catch (e) {
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.error,
+          title: "Error",
+          text: "Ocurrió un error al subir la imagen: $e",
+        );
       }
-    });
+    } else {
+      QuickAlert.show(
+        context: context,
+        type: QuickAlertType.warning,
+        title: "Advertencia",
+        text: "Selecciona una imagen antes de intentar subirla.",
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: Text("Agregar producto", style: TextStyle(
-            //color: Color(0xFF040F51)
-        ),),
+        backgroundColor: const Color(0xFF040C52),
+        title: const Text(
+          "Agregar Producto",
+          style: TextStyle(color: Colors.white),
+        ),
       ),
-      //backgroundColor: Color(0xFF040C52),
-      body: ListView(
-        children: [
-          Container(
-            margin: EdgeInsets.all(10),
-            child: Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.all(10),
-                  color: Colors.white,
-                  child: TextField(
-                    controller: nameProductController,
-                    decoration: InputDecoration(
-                      hintText: "Nombre",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      prefixIcon: Icon(Icons.bookmark_add, size: 20),
-                    ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ListView(
+          children: [
+            GestureDetector(
+              onTap: _showImageSourceDialog,
+              child: Container(
+                height: 150,
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Colors.grey),
+                ),
+                child: _imageFile == null
+                    ? const Center(
+                  child: Text(
+                    "Seleccionar Imagen",
+                    style: TextStyle(color: Colors.grey, fontSize: 16),
+                  ),
+                )
+                    : ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.file(
+                    _imageFile!,
+                    fit: BoxFit.cover,
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.all(10),
-                  color: Colors.white,
-                  child: TextField(
-                    controller: descProductController,
-                    decoration: InputDecoration(
-                      hintText: "Descripcion",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      prefixIcon: Icon(Icons.book, size: 20),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.all(10),
-                  color: Colors.white,
-                  child: TextField(
-                    controller: priceProductController,
-                    decoration: InputDecoration(
-                      hintText: "Precio",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      prefixIcon: Icon(Icons.price_change_outlined, size: 20),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.all(10),
-                  child: ElevatedButton(
-                    onPressed: complete,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Completar",
-                          style: TextStyle(
-                            color: Color(0xFF040C52),
-                          ),
-                        ),
-                      ],
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF7C8CB2),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(0),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Card(
+              elevation: 4,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    TextField(
+                      controller: nameProductController,
+                      decoration: const InputDecoration(
+                        labelText: "Nombre del producto",
+                        prefixIcon: Icon(Icons.bookmark_add),
                       ),
                     ),
-                  ),
+                    const SizedBox(height: 10),
+                    TextField(
+                      controller: descProductController,
+                      decoration: const InputDecoration(
+                        labelText: "Descripción",
+                        prefixIcon: Icon(Icons.description),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    TextField(
+                      controller: priceProductController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        labelText: "Precio",
+                        prefixIcon: Icon(Icons.price_change),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
-        ],
+            const SizedBox(height: 20),
+            ElevatedButton.icon(
+              onPressed: complete,
+              icon: const Icon(Icons.check),
+              label: const Text("Guardar Producto"),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF7C8CB2),
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+              ),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton.icon(
+              onPressed: subirImagen,
+              icon: const Icon(Icons.cloud_upload),
+              label: const Text("Subir Imagen"),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF4CAF50),
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

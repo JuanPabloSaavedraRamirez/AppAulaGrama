@@ -171,7 +171,7 @@ class _MenuState extends State<Menu> {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
-                  MaterialPageRoute(builder: (BuildContext context) => add_producto()),
+                  MaterialPageRoute(builder: (BuildContext context) => AddProducto()),
                 );
               },
               child: Row(

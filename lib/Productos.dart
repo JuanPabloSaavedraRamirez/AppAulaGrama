@@ -181,7 +181,7 @@ class _ProductosState extends State<Productos> {
         onPressed: (){
           Navigator.of(context).push(MaterialPageRoute(
               builder: (BuildContext context){
-                return add_producto();
+                return AddProducto();
               }
               )).then((value) {
             setState(() {
