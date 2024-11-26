@@ -42,6 +42,9 @@ dependencies:
   path_provider: ^2.0.12
   http: ^1.2.2
   dio: ^5.7.0
+  font_awesome_flutter: ^10.8.0 #libreria extra 1
+  quickalert: ^1.1.0 #libreria extra 2
+  image_card: ^0.0.4 #libreria extra 3
 
 dev_dependencies:
   flutter_test:
