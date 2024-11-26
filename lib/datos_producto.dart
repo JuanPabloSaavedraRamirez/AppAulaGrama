@@ -1,15 +1,19 @@
-class Datos_Producto{
-  String? id;
-  String? nombre;
-  String? descripcion;
-  String? precio;
+class Datos_Producto {
+  final String? id;
+  final String? nombre;
+  final String? descripcion;
+  final String? precio;
+  final String? foto;
 
-  Datos_Producto(this.id, this.nombre, this.descripcion, this.precio);
+  Datos_Producto({this.id, this.nombre, this.descripcion, this.precio, this.foto});
 
-  Datos_Producto.fromJson(Map<String, dynamic> json){
-    id = json['id'].toString();
-    nombre = json['nombre'];
-    descripcion = json['descripcion'];
-    precio = json['precio'].toString();
+  factory Datos_Producto.fromJson(Map<String, dynamic> json) {
+    return Datos_Producto(
+      id: json['id'],
+      nombre: json['nombre'],
+      descripcion: json['descripcion'],
+      precio: json['precio'],
+      foto: json['foto'],
+    );
   }
 }
