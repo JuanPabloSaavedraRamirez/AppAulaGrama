@@ -1,6 +1,9 @@
 import 'package:app_aulagramma/Productos.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as https;
+import 'package:dio/dio.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class add_producto extends StatefulWidget {
   const add_producto({super.key});
@@ -18,6 +21,9 @@ class _add_productoState extends State<add_producto> {
   String desP = "";
   String priceP = "";
 
+  File? _imageFile;
+  final ImagePicker _picker = ImagePicker();
+
   void complete(){
     nameP = nameProductController.text;
     desP = descProductController.text;
@@ -34,6 +40,36 @@ class _add_productoState extends State<add_producto> {
     });
     print('Respuesta: ' + response.body);
     Navigator.of(context).pop();
+  }
+
+
+  Future<void> _pickImage(ImageSource source) async {
+    final pickedFile = await _picker.pickImage(source: source);
+    if (pickedFile != null) {
+      setState(() {
+        _imageFile = File(pickedFile.path);
+      });
+    }
+  }
+
+  Dio dio = new Dio();
+
+  Future<void> subir_Imagen() async{
+    String filename = _imageFile!.path.split('/').last;
+    FormData formData = new FormData.fromMap({
+      'file' : await MultipartFile.fromFile(
+          _imageFile!.path, filename: filename
+      )
+    });
+
+    await dio.post('https://api.aulagrammae.com/apps/subir_foto.php',
+        data:formData).then((respuesta){
+      if(respuesta == '1'){
+        print("Todo bien");
+      }else{
+        print(respuesta);
+      }
+    });
   }
 
   @override

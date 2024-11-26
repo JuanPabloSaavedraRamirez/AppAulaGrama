@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:app_aulagramma/addProducto.dart';
 import 'package:app_aulagramma/blog.dart';
 import 'package:app_aulagramma/comprarProductos.dart';
 import 'package:app_aulagramma/home.dart';
@@ -6,6 +7,7 @@ import 'package:app_aulagramma/perfilBD.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as https;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Menu extends StatefulWidget {
   const Menu({super.key});
@@ -64,71 +66,36 @@ class _MenuState extends State<Menu> {
       child: ListView(
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text(username.isNotEmpty ? username : "Usuario", style: TextStyle(
-              color: Color(0xFFD0DBF3),
-            )),
-            accountEmail: Text(email.isNotEmpty ? email : "email@example.com", style: TextStyle(
-              color: Color(0xFFD0DBF3),
-            )),
+            accountName: Text(
+              username.isNotEmpty ? username : "Usuario",
+              style: TextStyle(color: Color(0xFFD0DBF3)),
+            ),
+            accountEmail: Text(
+              email.isNotEmpty ? email : "email@example.com",
+              style: TextStyle(color: Color(0xFFD0DBF3)),
+            ),
             currentAccountPicture: Image.asset("Imagenes/LogoAulagramma.jpeg"),
-            decoration: BoxDecoration(
-              color: Color(0xFF040C52),
-            ),
+            decoration: BoxDecoration(color: Color(0xFF040C52)),
           ),
           Container(
             margin: EdgeInsets.all(10),
             child: ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      return home();
-                    },
-                  ),
+                  MaterialPageRoute(builder: (BuildContext context) => home()),
                 );
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Aula Gramma", style: TextStyle(
-                    color: Color(0xFFD0DBF3),
-                  )),
+                  FaIcon(FontAwesomeIcons.graduationCap, color: Color(0xFFD0DBF3)),
+                  SizedBox(width: 10),
+                  Text("Aula Gramma", style: TextStyle(color: Color(0xFFD0DBF3))),
                 ],
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF040C52),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(0),
-                ),
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.all(10),
-            child: ElevatedButton(
-              onPressed: () async {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      return perfilBD();
-                    },
-                  ),
-                );
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Perfil", style: TextStyle(
-                      color: Color(0xFFD0DBF3),
-                    ),
-                  ),
-                ],
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF040C52),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(0),
-                ),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
               ),
             ),
           ),
@@ -137,27 +104,42 @@ class _MenuState extends State<Menu> {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      return ComprarProductos();
-                    },
-                  ),
+                  MaterialPageRoute(builder: (BuildContext context) => perfilBD()),
                 );
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Tienda", style: TextStyle(
-                      color: Color(0xFFD0DBF3),
-                    ),
-                  ),
+                  FaIcon(FontAwesomeIcons.user, color: Color(0xFFD0DBF3)),
+                  SizedBox(width: 10),
+                  Text("Perfil", style: TextStyle(color: Color(0xFFD0DBF3))),
                 ],
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF040C52),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(0),
-                ),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(10),
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (BuildContext context) => ComprarProductos()),
+                );
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FaIcon(FontAwesomeIcons.shoppingCart, color: Color(0xFFD0DBF3)),
+                  SizedBox(width: 10),
+                  Text("Tienda", style: TextStyle(color: Color(0xFFD0DBF3))),
+                ],
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF040C52),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
               ),
             ),
           ),
@@ -167,26 +149,42 @@ class _MenuState extends State<Menu> {
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (BuildContext context) {
-                      return Blog(username: username);
-                    },
-                  ),
+                      builder: (BuildContext context) => Blog(username: username)),
                 );
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Blog", style: TextStyle(
-                      color: Color(0xFFD0DBF3),
-                    ),
-                  ),
+                  FaIcon(FontAwesomeIcons.blog, color: Color(0xFFD0DBF3)),
+                  SizedBox(width: 10),
+                  Text("Blog", style: TextStyle(color: Color(0xFFD0DBF3))),
                 ],
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF040C52),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(0),
-                ),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.all(10),
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (BuildContext context) => add_producto()),
+                );
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FaIcon(FontAwesomeIcons.plusCircle, color: Color(0xFFD0DBF3)),
+                  SizedBox(width: 10),
+                  Text("Añadir curso", style: TextStyle(color: Color(0xFFD0DBF3))),
+                ],
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF040C52),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
               ),
             ),
           ),

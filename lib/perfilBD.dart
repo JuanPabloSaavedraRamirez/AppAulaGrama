@@ -8,7 +8,6 @@
   import 'package:image_picker/image_picker.dart';
   import 'package:shared_preferences/shared_preferences.dart';
   import 'package:app_aulagramma/loginBD.dart';
-  import 'package:dio/dio.dart';
 
   class perfilBD extends StatefulWidget {
     const perfilBD({super.key});
@@ -54,7 +53,6 @@
         });
         _saveImageToPreferences(_imageFile!);
       }
-      subir_Imagen();
     }
 
     Future<void> _saveImageToPreferences(File image) async {
@@ -87,25 +85,7 @@
       );
     }
 
-    Dio dio = new Dio();
 
-    Future<void> subir_Imagen() async{
-      String filename = _imageFile!.path.split('/').last;
-      FormData formData = new FormData.fromMap({
-        'file' : await MultipartFile.fromFile(
-            _imageFile!.path, filename: filename
-        )
-      });
-
-      await dio.post('https://api.aulagrammae.com/apps/subir_foto.php',
-          data:formData).then((respuesta){
-        if(respuesta == '1'){
-          print("Todo bien");
-        }else{
-          print(respuesta);
-        }
-      });
-    }
 
 
     @override
