@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as https;
 import 'package:dio/dio.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:quickalert/quickalert.dart'; // Importa la biblioteca QuickAlert
+import 'package:quickalert/quickalert.dart';
 import 'dart:io';
 
 class AddProducto extends StatefulWidget {
