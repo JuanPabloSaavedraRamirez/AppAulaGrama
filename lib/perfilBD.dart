@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:app_aulagramma/datos_perfil.dart';
 import 'package:app_aulagramma/menu.dart';
+import 'package:app_aulagramma/modPerfilBD.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as https;
 import 'package:dio/dio.dart';
@@ -54,6 +55,21 @@ class _perfilBDState extends State<perfilBD> {
       MaterialPageRoute(builder: (context) => loginBD()),
           (Route<dynamic> route) => false,
     );
+  }
+
+  Future<void> modP() async {
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+        builder: (context) => modPerfilBD(
+                          datos[0].id,
+                          datos[0].user,
+                          datos[0].correo,
+                          datos[0].password,
+                          datos[0].numTelefonico,
+                          //datos[0].FechaNacimiento,
+    ),
+    ),);
   }
 
   Future<void> _pickImage(ImageSource source) async {
@@ -238,6 +254,24 @@ class _perfilBDState extends State<perfilBD> {
                 itemBuilder: (BuildContext context, int index) {
                   return _buildProfileCard(datos[index]);
                 },
+              ),
+            ),
+            ElevatedButton.icon(
+              onPressed: modP,
+              icon: const Icon(Icons.cloud_upload),
+              label: const Text("ModPerfil"),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF4CAF50),
+                padding: const EdgeInsets.symmetric(vertical: 16),
+              ),
+            ),
+            ElevatedButton.icon(
+              onPressed: _logout,
+              icon: const Icon(Icons.cloud_upload),
+              label: const Text("CerrarSesion"),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF4CAF50),
+                padding: const EdgeInsets.symmetric(vertical: 16),
               ),
             ),
           ],
